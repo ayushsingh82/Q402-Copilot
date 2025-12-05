@@ -12,7 +12,7 @@ export default function X402Page() {
         <div className="max-w-6xl mx-auto">
           {/* Page Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-6 text-white" style={{ fontFamily: 'cursive' }}>
+            <h1 className="text-5xl font-bold mb-6 text-white" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
               x402 Payment Protocol Demo
             </h1>
             <p className="text-xl text-zinc-300">
@@ -24,7 +24,7 @@ export default function X402Page() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Client */}
             <div className="border border-zinc-400 p-6">
-              <h2 className="text-3xl font-bold mb-4 text-white" style={{ fontFamily: 'cursive' }}>
+              <h2 className="text-3xl font-bold mb-4 text-white" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
                 Client
               </h2>
               <p className="text-zinc-300 mb-6">
@@ -35,7 +35,7 @@ export default function X402Page() {
 
             {/* Server */}
             <div className="border border-zinc-400 p-6">
-              <h2 className="text-3xl font-bold mb-4 text-white" style={{ fontFamily: 'cursive' }}>
+              <h2 className="text-3xl font-bold mb-4 text-white" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
                 Server
               </h2>
               <p className="text-zinc-300 mb-6">
@@ -47,7 +47,7 @@ export default function X402Page() {
 
           {/* How It Works */}
           <div className="mt-12 border border-zinc-400 p-8">
-            <h2 className="text-3xl font-bold mb-6 text-white" style={{ fontFamily: 'cursive' }}>
+            <h2 className="text-3xl font-bold mb-6 text-white" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
               How x402 Works
             </h2>
             <div className="space-y-4">

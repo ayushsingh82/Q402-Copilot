@@ -14,39 +14,68 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full border-b border-zinc-400">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo/Brand */}
-          <Link href="/" className="text-2xl font-bold text-white" style={{ fontFamily: 'cursive' }}>
-            q402
-          </Link>
+    <nav
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        padding: "1.5rem 2rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        background: "rgba(5, 5, 5, 0.8)",
+        backdropFilter: "blur(10px)",
+        borderBottom: "1px solid var(--border)",
+        zIndex: 100,
+      }}
+    >
+      {/* Logo/Brand */}
+      <Link
+        href="/"
+        style={{
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          color: "var(--orange)",
+          textShadow: "0 0 10px var(--orange-glow)",
+          textDecoration: "none",
+          fontFamily: "'Georgia', 'Palatino', serif",
+        }}
+      >
+        q402-copilot
+      </Link>
 
-          {/* Navigation Links - Middle */}
-          <div className="flex items-center gap-8">
-            {navItems.map((item) => {
-              const isActive = pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className={`text-base font-medium transition-colors ${
-                    isActive
-                      ? "text-white border-b-2 border-white"
-                      : "text-zinc-300 hover:text-white"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
+      {/* Navigation Links - Middle */}
+      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {navItems.map((item) => {
+          const isActive = pathname === item.path;
+          return (
+            <Link
+              key={item.path}
+              href={item.path}
+              style={{
+                color: isActive ? "var(--orange)" : "var(--text)",
+                textDecoration: "none",
+                transition: "color 0.3s",
+                borderBottom: isActive ? "2px solid var(--orange)" : "none",
+                paddingBottom: isActive ? "4px" : "0",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) e.currentTarget.style.color = "var(--orange)";
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) e.currentTarget.style.color = "var(--text)";
+              }}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
+      </div>
 
-          {/* Wallet Connect Button - Right */}
-          <div className="flex items-center">
-            <ConnectButton />
-          </div>
-        </div>
+      {/* Wallet Connect Button - Right */}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <ConnectButton />
       </div>
     </nav>
   );
