@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function X402ServerDemo() {
+export default function Server() {
   const [serverRunning, setServerRunning] = useState(false);
   const [serverPort, setServerPort] = useState("3001");
   const [endpoints, setEndpoints] = useState([
@@ -84,26 +84,57 @@ export default function X402ServerDemo() {
       )}
 
       <div className="p-4 bg-zinc-900 border border-zinc-400 rounded">
-        <h4 className="text-sm font-semibold text-white mb-2">Server Code Example:</h4>
+        <h4 className="text-sm font-semibold text-white mb-2">Server Code Example (from examples/bsc-testnet/server/express-server.ts):</h4>
         <pre className="text-xs text-zinc-300 overflow-x-auto">
-          {`import { createX402BnbMiddleware } from "@q402/middleware-express";
+          {`import express from "express";
+import { createWalletClient, http } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { bscTestnet } from "viem/chains";
+import { createQ402Middleware } from "@q402/middleware-express";
+import { SupportedNetworks } from "@q402/core";
 
-app.use(createX402BnbMiddleware({
+const app = express();
+
+// Create sponsor wallet client
+const sponsorAccount = privateKeyToAccount(process.env.SPONSOR_PRIVATE_KEY);
+const walletClient = createWalletClient({
+  account: sponsorAccount,
+  chain: bscTestnet,
+  transport: http(process.env.RPC_URL),
+});
+
+// Apply q402 middleware  
+app.use(createQ402Middleware({
   network: SupportedNetworks.BSC_TESTNET,
-  recipientAddress: "0x...",
-  implementationContract: "0x...",
-  verifyingContract: "0x...",
+  recipientAddress: process.env.RECIPIENT_ADDRESS,
+  implementationContract: process.env.IMPLEMENTATION_CONTRACT,
+  verifyingContract: process.env.VERIFYING_CONTRACT,
   walletClient,
   endpoints: [
     {
       path: "/api/premium-data",
-      amount: "1000000",
-      token: "0x3376...",
-      description: "Premium API access",
+      amount: "1000000", // 1 USDT
+      token: "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+      description: "Access to premium data",
+      mimeType: "application/json",
     },
   ],
   autoSettle: true,
-}));`}
+}));
+
+// Protected route
+app.get("/api/premium-data", (req, res) => {
+  res.json({
+    message: "Premium data access granted",
+    data: {
+      timestamp: Date.now(),
+      premium: true,
+      payer: req.payment?.payer,
+    },
+  });
+});
+
+app.listen(3001);`}
         </pre>
       </div>
     </div>

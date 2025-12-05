@@ -1,8 +1,8 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import X402ClientDemo from "@/components/x402/ClientDemo";
-import X402ServerDemo from "@/components/x402/ServerDemo";
+import Client from "@/components/x402/Client";
+import Server from "@/components/x402/Server";
 
 export default function X402Page() {
   return (
@@ -22,26 +22,26 @@ export default function X402Page() {
 
           {/* Client and Server Demos */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Client Demo */}
+            {/* Client */}
             <div className="border border-zinc-400 p-6">
               <h2 className="text-3xl font-bold mb-4 text-white" style={{ fontFamily: 'cursive' }}>
-                Client Demo
+                Client
               </h2>
               <p className="text-zinc-300 mb-6">
                 Create and sign payments. Request resources from the server with X-PAYMENT header.
               </p>
-              <X402ClientDemo />
+              <Client />
             </div>
 
-            {/* Server Demo */}
+            {/* Server */}
             <div className="border border-zinc-400 p-6">
               <h2 className="text-3xl font-bold mb-4 text-white" style={{ fontFamily: 'cursive' }}>
-                Server Demo
+                Server
               </h2>
               <p className="text-zinc-300 mb-6">
                 Server endpoint that requires payment. Returns 402 Payment Required when no payment provided.
               </p>
-              <X402ServerDemo />
+              <Server />
             </div>
           </div>
 
