@@ -4,7 +4,7 @@ export default function Landing() {
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6 text-white">
+          <h1 className="text-5xl font-bold mb-6 text-white" style={{ fontFamily: 'cursive' }}>
             Welcome to q402
           </h1>
           <p className="text-xl text-zinc-300 mb-12">
@@ -19,7 +19,7 @@ export default function Landing() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Feature Box 1 */}
           <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: 'cursive' }}>
               Research & Explain
             </h3>
             <p className="text-zinc-300">
@@ -30,7 +30,7 @@ export default function Landing() {
 
           {/* Feature Box 2 */}
           <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: 'cursive' }}>
               Generate & Audit
             </h3>
             <p className="text-zinc-300">
@@ -41,7 +41,7 @@ export default function Landing() {
 
           {/* Feature Box 3 */}
           <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: 'cursive' }}>
               Execute Transactions
             </h3>
             <p className="text-zinc-300">
@@ -52,7 +52,7 @@ export default function Landing() {
 
           {/* Feature Box 4 */}
           <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: 'cursive' }}>
               Spend Caps
             </h3>
             <p className="text-zinc-300">
@@ -63,7 +63,7 @@ export default function Landing() {
 
           {/* Feature Box 5 */}
           <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: 'cursive' }}>
               Allow/Deny Lists
             </h3>
             <p className="text-zinc-300">
@@ -74,7 +74,7 @@ export default function Landing() {
 
           {/* Feature Box 6 */}
           <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: 'cursive' }}>
               Risk Warnings
             </h3>
             <p className="text-zinc-300">
@@ -89,7 +89,7 @@ export default function Landing() {
       <section className="container mx-auto px-6 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="border border-zinc-400 p-8">
-            <h2 className="text-3xl font-bold text-white mb-6">
+            <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: 'cursive' }}>
               About q402
             </h2>
             <p className="text-zinc-300 mb-4">
@@ -115,7 +115,7 @@ export default function Landing() {
       <section className="container mx-auto px-6 py-12">
         <div className="max-w-2xl mx-auto text-center">
           <div className="border border-zinc-400 p-12">
-            <h2 className="text-3xl font-bold text-white mb-6">
+            <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: 'cursive' }}>
               Ready to Get Started?
             </h2>
             <p className="text-zinc-300 mb-8">

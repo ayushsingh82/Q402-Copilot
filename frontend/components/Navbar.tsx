@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const navItems = [
-  { name: "Home", path: "/" },
   { name: "Chat", path: "/chat" },
   { name: "Transactions", path: "/transactions" },
   { name: "Settings", path: "/settings" },
@@ -18,11 +18,11 @@ export default function Navbar() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
-          <Link href="/" className="text-2xl font-bold text-white">
+          <Link href="/" className="text-2xl font-bold text-white" style={{ fontFamily: 'cursive' }}>
             q402
           </Link>
 
-          {/* Navigation Links */}
+          {/* Navigation Links - Middle */}
           <div className="flex items-center gap-8">
             {navItems.map((item) => {
               const isActive = pathname === item.path;
@@ -40,6 +40,11 @@ export default function Navbar() {
                 </Link>
               );
             })}
+          </div>
+
+          {/* Wallet Connect Button - Right */}
+          <div className="flex items-center">
+            <ConnectButton />
           </div>
         </div>
       </div>

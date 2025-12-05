@@ -7,7 +7,7 @@ export default function SettingsPage() {
       <div className="container mx-auto px-6 py-12">
         <div className="border border-zinc-400 aspect-square p-8 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white mb-4">Settings</h1>
+            <h1 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: 'cursive' }}>Settings</h1>
             <p className="text-zinc-300">Settings page coming soon...</p>
           </div>
         </div>
