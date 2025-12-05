@@ -7,7 +7,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 const navItems = [
   { name: "Chat", path: "/chat" },
   { name: "Transactions", path: "/transactions" },
-  { name: "Settings", path: "/settings" },
+  { name: "402", path: "/402" },
 ];
 
 export default function Navbar() {

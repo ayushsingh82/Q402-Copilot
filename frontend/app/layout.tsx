@@ -3,7 +3,7 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "q402 - Web3 Copilot",
+  title: "q402-copilot",
   description: "Chat-based Web3 Copilot on BNB Chain powered by ChainGPT and x402",
 };
 

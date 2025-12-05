@@ -9,7 +9,7 @@ import { bscTestnet } from "viem/chains";
 
 
 const config = getDefaultConfig({
-  appName: "q402 - Copilot",
+  appName: "q402-copilot",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
   chains: [bscTestnet],
   ssr: true,

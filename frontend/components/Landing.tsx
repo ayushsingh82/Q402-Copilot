@@ -5,7 +5,7 @@ export default function Landing() {
       <section className="container mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6 text-white" style={{ fontFamily: 'cursive' }}>
-            Welcome to q402
+            Welcome to q402-copilot
           </h1>
           <p className="text-xl text-zinc-300 mb-12">
             Your Web3 Copilot for BNB Chain. Research, generate, and execute
@@ -90,15 +90,15 @@ export default function Landing() {
         <div className="max-w-3xl mx-auto">
           <div className="border border-zinc-400 p-8">
             <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: 'cursive' }}>
-              About q402
+              About q402-copilot
             </h2>
             <p className="text-zinc-300 mb-4">
-              q402 is a chat-based Web3 Copilot built on BNB Chain that combines
+              q402-copilot is a chat-based Web3 Copilot built on BNB Chain that combines
               the power of ChainGPT AI with the gasless payment protocol of
               x402. Built for the Quack × ChainGPT Super Web3 Agent Hackathon.
             </p>
             <p className="text-zinc-300 mb-4">
-              With q402, you can research tokens and protocols, generate or
+              With q402-copilot, you can research tokens and protocols, generate or
               audit smart contracts, and execute complex transactions—all through
               a simple chat interface. Everything is secured with spend caps,
               allow/deny lists, and comprehensive risk warnings.
