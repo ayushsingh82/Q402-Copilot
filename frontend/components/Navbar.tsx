@@ -54,7 +54,7 @@ export default function Navbar() {
 
           {/* Wallet Connect Button - Right */}
           <div className="flex items-center">
-            <ConnectButton />
+            <ConnectButton showBalance={false} />
           </div>
         </div>
       </div>

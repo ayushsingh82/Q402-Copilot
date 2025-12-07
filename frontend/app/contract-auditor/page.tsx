@@ -37,19 +37,17 @@ export default function ContractAuditorPage() {
     setPaymentStatus("");
 
     try {
-      // Send native BNB transaction
-      setPaymentStatus("Sending payment transaction...");
+      // Show amount
+      setPaymentStatus("Amount: 0.01 BNB");
       
-      const hash = await walletClient.sendTransaction({
-        account: address,
-        to: RECIPIENT_ADDRESS,
-        value: AMOUNT,
-      });
+      // Wait 2 seconds
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      setPaymentStatus(`Transaction sent: ${hash.substring(0, 10)}... Waiting for confirmation...`);
-
-      // Wait for transaction confirmation
-      await publicClient.waitForTransactionReceipt({ hash });
+      // Proceed with payment simulation
+      setPaymentStatus("Processing payment...");
+      
+      // Wait 2-3 seconds (using 2.5 seconds)
+      await new Promise(resolve => setTimeout(resolve, 2500));
 
       setPaymentStatus("Payment confirmed! Auditing contract...");
 
