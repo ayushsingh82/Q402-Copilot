@@ -18,82 +18,70 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Gradient text for headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: cursive;
+  background: linear-gradient(135deg, #3DC0D7 0%, #F7CE3E 25%, #FB6755 50%, #6665E3 75%, #3DC0D7 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
 }
 
-/* Highlight effects for headings */
-.highlight-blue {
-  color: white;
-  background-color: #3b82f6; /* blue-500 */
-  padding: 0.25rem 0.75rem;
-  display: inline-block;
-  border-radius: 0.25rem;
-}
-
-.highlight-red {
-  color: white;
-  background-color: #ef4444; /* red-500 */
-  padding: 0.25rem 0.75rem;
-  display: inline-block;
-  border-radius: 0.25rem;
-}
-
-.highlight-purple {
-  color: white;
-  background-color: #a855f7; /* purple-500 */
-  padding: 0.25rem 0.75rem;
-  display: inline-block;
-  border-radius: 0.25rem;
-}
-
-.highlight-yellow {
-  color: white;
-  background-color: #eab308; /* yellow-500 */
-  padding: 0.25rem 0.75rem;
-  display: inline-block;
-  border-radius: 0.25rem;
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Feature box hover effects */
 .feature-box {
-  border: 1px solid transparent;
+  border: none;
   transition: all 0.3s ease;
+  position: relative;
 }
 
-.feature-box-red:hover {
-  border-color: white;
-  background-color: #ef4444; /* red-500 */
+/* Grid lines - right border for all boxes except last column */
+.feature-box:not(:nth-child(3n)) {
+  border-right: 1px solid white;
 }
 
-.feature-box-red:hover p {
-  color: white;
+/* Grid lines - bottom border for all boxes except last row */
+.feature-box:not(:nth-child(n+4)) {
+  border-bottom: 1px solid white;
 }
 
-.feature-box-purple:hover {
-  border-color: white;
-  background-color: #a855f7; /* purple-500 */
+/* For mobile/tablet - adjust grid lines */
+@media (max-width: 1024px) {
+  .feature-box:not(:nth-child(3n)) {
+    border-right: none;
+  }
+  .feature-box:not(:nth-child(2n)) {
+    border-right: 1px solid white;
+  }
+  .feature-box:not(:nth-child(n+5)) {
+    border-bottom: 1px solid white;
+  }
 }
 
-.feature-box-purple:hover p {
-  color: white;
+@media (max-width: 768px) {
+  .feature-box:not(:nth-child(2n)) {
+    border-right: none;
+  }
+  .feature-box:not(:last-child) {
+    border-bottom: 1px solid white;
+  }
 }
 
-.feature-box-yellow:hover {
-  border-color: white;
-  background-color: #eab308; /* yellow-500 */
+.feature-box:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.feature-box-yellow:hover p {
-  color: white;
-}
-
-.feature-box-blue:hover {
-  border-color: white;
-  background-color: #3b82f6; /* blue-500 */
-}
-
-.feature-box-blue:hover p {
+.feature-box:hover p {
   color: white;
 }
 
@@ -114,4 +102,103 @@ h1, h2, h3, h4, h5, h6 {
 .floating-animation-delay {
   animation: float 3s ease-in-out infinite;
   animation-delay: 1.5s;
+}
+
+/* Input focus styles - keep white border */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: white !important;
+  box-shadow: none !important;
+}
+
+/* Remove default browser focus ring */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none !important;
+  border-color: white !important;
+}
+
+/* Navbar grid separators - full height from top to bottom of navbar container */
+nav .nav-separator {
+  position: absolute;
+  top: -1rem;
+  bottom: -1rem;
+  width: 1px;
+  background-color: white;
+}
+
+/* MoveStudio-style border with corner accents (white version) */
+.frame-border {
+  position: relative;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.frame-border::before,
+.frame-border::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: white;
+  z-index: 10;
+}
+
+/* Top-left corner */
+.frame-border::before {
+  top: 0;
+  left: 0;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+}
+
+/* Bottom-right corner */
+.frame-border::after {
+  bottom: 0;
+  right: 0;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+/* Additional corner elements */
+.frame-border .corner-top-left,
+.frame-border .corner-top-right,
+.frame-border .corner-bottom-left,
+.frame-border .corner-bottom-right {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: white;
+  z-index: 10;
+}
+
+.frame-border .corner-top-left {
+  top: 0;
+  left: 0;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+}
+
+.frame-border .corner-top-right {
+  top: 0;
+  right: 0;
+  border-right: 2px solid white;
+  border-top: 2px solid white;
+}
+
+.frame-border .corner-bottom-left {
+  bottom: 0;
+  left: 0;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+.frame-border .corner-bottom-right {
+  bottom: 0;
+  right: 0;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
 }

@@ -104,7 +104,7 @@ export default function ContractAuditorPage() {
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-6 highlight-yellow" style={{ fontFamily: 'cursive' }}>
+            <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
               Smart Contract Auditor
             </h1>
             <p className="text-xl text-zinc-300">
@@ -112,13 +112,17 @@ export default function ContractAuditorPage() {
             </p>
           </div>
 
-          <div className="border border-zinc-400 p-8 space-y-6">
+          <div className="frame-border p-8 space-y-6 relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
             <div>
               <label className="block text-zinc-300 mb-2">Contract Code</label>
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded font-mono text-sm"
+                className="w-full px-4 py-2 bg-black border border-white text-white rounded font-mono text-sm"
                 rows={12}
                 placeholder="Paste your Solidity contract code here, e.g.:
 pragma solidity ^0.8.0;
@@ -142,7 +146,7 @@ contract Counter {
               <select
                 value={chatHistory}
                 onChange={(e) => setChatHistory(e.target.value as "on" | "off")}
-                className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                className="w-full px-4 py-2 bg-black border border-white text-white rounded"
               >
                 <option value="off">Off</option>
                 <option value="on">On</option>
@@ -153,14 +157,14 @@ contract Counter {
               <button
                 onClick={handleAuditBlob}
                 disabled={loading || streaming}
-                className="flex-1 px-8 py-3 border border-zinc-400 text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
+                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
               >
                 {loading ? "Auditing..." : "Audit (Full Report)"}
               </button>
               <button
                 onClick={handleAuditStream}
                 disabled={loading || streaming}
-                className="flex-1 px-8 py-3 border border-zinc-400 text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
+                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
               >
                 {streaming ? "Streaming..." : "Audit (Stream)"}
               </button>
@@ -173,7 +177,11 @@ contract Counter {
             )}
 
             {result && (
-              <div className="p-4 bg-zinc-900 border border-zinc-600 rounded">
+              <div className="p-4 bg-zinc-900 frame-border rounded relative">
+                <div className="corner-top-left"></div>
+                <div className="corner-top-right"></div>
+                <div className="corner-bottom-left"></div>
+                <div className="corner-bottom-right"></div>
                 <h3 className="text-lg font-semibold mb-2 text-white">Audit Report:</h3>
                 <pre className="text-sm text-zinc-300 whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto">
                   {result}

@@ -10,6 +10,7 @@ export default function NFTGeneratorPage() {
   const [steps, setSteps] = useState(2);
   const [width, setWidth] = useState(512);
   const [height, setHeight] = useState(512);
+  const [chainId, setChainId] = useState(97); // BNB Testnet
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +38,7 @@ export default function NFTGeneratorPage() {
           steps,
           width,
           height,
+          chainId,
         }),
       });
 
@@ -64,7 +66,7 @@ export default function NFTGeneratorPage() {
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-6 highlight-blue" style={{ fontFamily: 'cursive' }}>
+            <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
               NFT Generator
             </h1>
             <p className="text-xl text-zinc-300">
@@ -72,13 +74,17 @@ export default function NFTGeneratorPage() {
             </p>
           </div>
 
-          <div className="border border-zinc-400 p-8 space-y-6">
+          <div className="frame-border p-8 space-y-6 relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
             <div>
               <label className="block text-zinc-300 mb-2">Prompt</label>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                className="w-full px-4 py-2 bg-black border border-white text-white rounded"
                 rows={4}
                 placeholder="Describe the NFT image you want to generate..."
               />
@@ -90,7 +96,7 @@ export default function NFTGeneratorPage() {
                 <select
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-                  className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                  className="w-full px-4 py-2 bg-black border border-white text-white rounded"
                 >
                   <option value="velogen">VeloGen</option>
                   <option value="nebula_forge_xl">Nebula Forge XL</option>
@@ -103,7 +109,7 @@ export default function NFTGeneratorPage() {
                 <select
                   value={enhance}
                   onChange={(e) => setEnhance(e.target.value)}
-                  className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                  className="w-full px-4 py-2 bg-black border border-white text-white rounded"
                 >
                   <option value="original">Original</option>
                   <option value="1x">1x Enhancement</option>
@@ -117,7 +123,7 @@ export default function NFTGeneratorPage() {
                   type="number"
                   value={steps}
                   onChange={(e) => setSteps(Number(e.target.value))}
-                  className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                  className="w-full px-4 py-2 bg-black border border-white text-white rounded"
                   min="1"
                   max="50"
                 />
@@ -129,7 +135,7 @@ export default function NFTGeneratorPage() {
                   type="number"
                   value={width}
                   onChange={(e) => setWidth(Number(e.target.value))}
-                  className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                  className="w-full px-4 py-2 bg-black border border-white text-white rounded"
                 />
               </div>
 
@@ -139,15 +145,29 @@ export default function NFTGeneratorPage() {
                   type="number"
                   value={height}
                   onChange={(e) => setHeight(Number(e.target.value))}
-                  className="w-full px-4 py-2 bg-black border border-zinc-600 text-white rounded"
+                  className="w-full px-4 py-2 bg-black border border-white text-white rounded"
                 />
+              </div>
+
+              <div>
+                <label className="block text-zinc-300 mb-2">Chain ID</label>
+                <select
+                  value={chainId}
+                  onChange={(e) => setChainId(Number(e.target.value))}
+                  className="w-full px-4 py-2 bg-black border border-white text-white rounded"
+                >
+                  <option value={97}>BNB Smart Chain Testnet (97)</option>
+                  <option value={56}>BNB Smart Chain Mainnet (56)</option>
+                  <option value={1}>Ethereum Mainnet (1)</option>
+                  <option value={137}>Polygon Mainnet (137)</option>
+                </select>
               </div>
             </div>
 
             <button
               onClick={handleGenerate}
               disabled={loading}
-              className="w-full px-8 py-3 border border-zinc-400 text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
+              className="w-full px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
             >
               {loading ? "Generating..." : "Generate NFT Image"}
             </button>
@@ -159,7 +179,11 @@ export default function NFTGeneratorPage() {
             )}
 
             {result && (
-              <div className="p-4 bg-zinc-900 border border-zinc-600 rounded">
+              <div className="p-4 bg-zinc-900 frame-border rounded relative">
+                <div className="corner-top-left"></div>
+                <div className="corner-top-right"></div>
+                <div className="corner-bottom-left"></div>
+                <div className="corner-bottom-right"></div>
                 {result.startsWith("http") || result.startsWith("data:") ? (
                   <img src={result} alt="Generated NFT" className="max-w-full rounded" />
                 ) : (

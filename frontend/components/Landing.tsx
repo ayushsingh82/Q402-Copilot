@@ -20,7 +20,7 @@ export default function Landing() {
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6 highlight-blue" style={{ fontFamily: 'cursive' }}>
+          <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
             Welcome to Q402-copilot
           </h1>
           <p className="text-xl text-zinc-300 mb-12">
@@ -32,10 +32,16 @@ export default function Landing() {
 
       {/* Features Grid */}
       <section className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 relative">
+          {/* Grid overlay lines */}
+          <div className="absolute inset-0 pointer-events-none grid-lines-overlay"></div>
           {/* Feature Box 1 */}
-          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold mb-4 highlight-red" style={{ fontFamily: 'cursive' }}>
+          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center frame-border relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
               Research & Explain
             </h3>
             <p className="text-zinc-300">
@@ -45,8 +51,12 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 2 */}
-          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold mb-4 highlight-purple" style={{ fontFamily: 'cursive' }}>
+          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center frame-border relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
               Generate & Audit
             </h3>
             <p className="text-zinc-300">
@@ -56,8 +66,12 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 3 */}
-          <div className="aspect-square feature-box feature-box-yellow p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold mb-4 highlight-yellow" style={{ fontFamily: 'cursive' }}>
+          <div className="aspect-square feature-box feature-box-yellow p-6 flex flex-col justify-center items-center text-center frame-border relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
               Execute Transactions
             </h3>
             <p className="text-zinc-300">
@@ -67,8 +81,12 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 4 */}
-          <div className="aspect-square feature-box feature-box-blue p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold mb-4 highlight-blue" style={{ fontFamily: 'cursive' }}>
+          <div className="aspect-square feature-box feature-box-blue p-6 flex flex-col justify-center items-center text-center frame-border relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
               Spend Caps
             </h3>
             <p className="text-zinc-300">
@@ -78,8 +96,12 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 5 */}
-          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold mb-4 highlight-red" style={{ fontFamily: 'cursive' }}>
+          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center frame-border relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
               Allow/Deny Lists
             </h3>
             <p className="text-zinc-300">
@@ -89,8 +111,12 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 6 */}
-          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold mb-4 highlight-purple" style={{ fontFamily: 'cursive' }}>
+          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center frame-border relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
               Risk Warnings
             </h3>
             <p className="text-zinc-300">
@@ -104,8 +130,12 @@ export default function Landing() {
       {/* About Section */}
       <section className="container mx-auto px-6 py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="border border-zinc-400 p-8">
-            <h2 className="text-3xl font-bold mb-6 highlight-yellow" style={{ fontFamily: 'cursive' }}>
+          <div className="frame-border p-8 relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
               About q402-copilot
             </h2>
             <p className="text-zinc-300 mb-4">
