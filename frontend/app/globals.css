@@ -40,45 +40,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Feature box hover effects */
 .feature-box {
-  border: none;
   transition: all 0.3s ease;
   position: relative;
 }
 
-/* Grid lines - right border for all boxes except last column */
-.feature-box:not(:nth-child(3n)) {
-  border-right: 1px solid white;
-}
-
-/* Grid lines - bottom border for all boxes except last row */
-.feature-box:not(:nth-child(n+4)) {
-  border-bottom: 1px solid white;
-}
-
-/* For mobile/tablet - adjust grid lines */
-@media (max-width: 1024px) {
-  .feature-box:not(:nth-child(3n)) {
-    border-right: none;
-  }
-  .feature-box:not(:nth-child(2n)) {
-    border-right: 1px solid white;
-  }
-  .feature-box:not(:nth-child(n+5)) {
-    border-bottom: 1px solid white;
-  }
-}
-
-@media (max-width: 768px) {
-  .feature-box:not(:nth-child(2n)) {
-    border-right: none;
-  }
-  .feature-box:not(:last-child) {
-    border-bottom: 1px solid white;
-  }
-}
-
 .feature-box:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.feature-box.bg-black:hover {
+  background-color: #000000 !important;
 }
 
 .feature-box:hover p {
@@ -130,75 +101,106 @@ nav .nav-separator {
   background-color: white;
 }
 
-/* MoveStudio-style border with corner accents (white version) */
+/* Token box style border with geometric frame (white version) */
 .frame-border {
-  position: relative;
-  border: 1px solid white;
+  clip-path: polygon(
+    2% 0, 98% 0, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0 98%, 0 2%
+  );
+  border: 3px solid white;
   background-color: transparent;
+  position: relative;
+  z-index: 10;
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.2),
+    0 0 40px rgba(255, 255, 255, 0.1),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.frame-border::before,
+/* Allow black background on landing page boxes */
+.frame-border.bg-black {
+  background-color: #000000 !important;
+}
+
+.frame-border.bg-black:hover {
+  background-color: #000000 !important;
+}
+
+.frame-border:hover {
+  border-color: white;
+  box-shadow: 
+    0 0 30px rgba(255, 255, 255, 0.4),
+    0 0 60px rgba(255, 255, 255, 0.2),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Multiple inner borders for depth */
+.frame-border::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  z-index: 1;
+  clip-path: polygon(
+    2% 0, 98% 0, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0 98%, 0 2%
+  );
+}
+
 .frame-border::after {
   content: '';
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-color: white;
-  z-index: 10;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Top-left corner */
-.frame-border::before {
-  top: 0;
-  left: 0;
-  border-left: 2px solid white;
-  border-top: 2px solid white;
-}
-
-/* Bottom-right corner */
-.frame-border::after {
-  bottom: 0;
-  right: 0;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
-}
-
-/* Additional corner elements */
+/* Corner accent decorations */
 .frame-border .corner-top-left,
 .frame-border .corner-top-right,
 .frame-border .corner-bottom-left,
 .frame-border .corner-bottom-right {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-color: white;
-  z-index: 10;
+  width: 24px;
+  height: 24px;
+  border: 2px solid white;
+  z-index: 30;
+  pointer-events: none;
 }
 
 .frame-border .corner-top-left {
-  top: 0;
-  left: 0;
-  border-left: 2px solid white;
-  border-top: 2px solid white;
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
 }
 
 .frame-border .corner-top-right {
-  top: 0;
-  right: 0;
-  border-right: 2px solid white;
-  border-top: 2px solid white;
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
 }
 
 .frame-border .corner-bottom-left {
-  bottom: 0;
-  left: 0;
-  border-left: 2px solid white;
-  border-bottom: 2px solid white;
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
 }
 
 .frame-border .corner-bottom-right {
-  bottom: 0;
-  right: 0;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
 }

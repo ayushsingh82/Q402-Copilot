@@ -1,629 +1,414 @@
-# q402 - EIP-7702 Delegated Payment Protocol
+# Q402-Copilot: ChainGPT API Wrapper with Pay-Per-Call
 
-> 🚀 **Future-Ready Implementation**: This project is a complete, production-grade implementation of EIP-7702 delegated execution for gasless payments on BSC and EVM networks. 
->
-> **EIP-7702 Timeline**: Expected in Ethereum Pectra upgrade (2025 Q2-Q3), followed by BSC adoption.
->
-> 📋 This implementation is ready for deployment when networks activate EIP-7702 support.
+> 🚀 **Web3 Copilot for BNB Chain**: A complete wrapper implementation that integrates ChainGPT AI APIs with the q402 payment protocol, enabling gasless, pay-per-call access to AI-powered smart contract tools.
 
-A next-generation gasless payment protocol using EIP-7702 delegated execution. Built to enhance project influence and governance execution for Quack AI ecosystem.
+**Built for the Quack × ChainGPT Super Web3 Agent Hackathon**
 
-**Inspired by the [x402 protocol](https://github.com/coinbase/x402)** - we extend the vision with EIP-7702's revolutionary approach.
+## What is Q402-Copilot?
 
-## What is q402?
+Q402-Copilot is a **wrapper application** that combines:
+- **q402 Protocol**: An EIP-7702 delegated payment protocol (x402 implementation on BSC testnet)
+- **ChainGPT APIs**: AI-powered smart contract generation, auditing, and NFT creation
+- **Pay-Per-Call Model**: Users pay for each API call using gasless BSC payments
 
-q402 uses EIP-7702's "user context push" to replace traditional ERC-20 allowance "pull" flow:
-
-- **Users sign offline**: One EIP-7702 authorization tuple + one EIP-712 payment witness
-- **Facilitator sponsors gas**: Submits type 0x04 (set-code) transaction on behalf of users
-- **Funds transfer directly**: No prior approval needed, no user-paid gas
-
-This protocol prioritizes BSC and theoretically supports all EIP-7702 enabled EVM chains.
-
-## Core Features
-
-- **EIP-7702 Delegated Execution** with sponsored gas
-- **HTTP 402 Payment Semantics** with standardized `paymentDetails`
-- **Single & Batch Payments** with multi-asset routing
-- **Dual Anti-Replay**: EIP-7702 auth nonce + application-level nonce/paymentId
-- **Strong Witness Binding**: Domain separation, order/resource context binding
-- **Facilitator Role**: Stateless verification + settlement + observability
-
-## Why q402?
-
-Traditional x402 requires ERC-3009 support, limiting token compatibility. q402 eliminates this:
-
-- ✅ Works with **any existing ERC-20** on BSC (no token upgrades)
-- ✅ **No initial approval** transaction needed
-- ✅ **Gasless for users** - facilitator sponsors all gas
-- ✅ **Production-ready** for BSC mainnet/testnet
-- ✅ **Compatible with Account Abstraction** (EIP-4337 infrastructure)
+This project enables users to access ChainGPT's powerful AI tools (smart contract generation, auditing, NFT generation) through a seamless Web3 payment flow where **users never pay gas fees** - the facilitator sponsors all transactions.
 
 ## Architecture Overview
 
-q402 consists of four main components working together:
-
 ```mermaid
 graph TB
-    subgraph "Client Application"
-        Client[Client SDK<br/>@q402/core]
+    subgraph "User Interface"
+        UI[Next.js Frontend<br/>React + TypeScript]
     end
     
-    subgraph "Resource Server"
-        Server[Express/Hono Server]
-        Middleware[Middleware<br/>@q402/middleware-express<br/>@q402/middleware-hono]
+    subgraph "API Layer"
+        API[Next.js API Routes]
+        SCGen[Smart Contract Generator]
+        SCAudit[Contract Auditor]
+        NFTGen[NFT Generator]
     end
     
-    subgraph "Facilitator Service"
-        Facilitator[Facilitator API<br/>@q402/facilitator]
-        Verify[Verification Service]
-        Settle[Settlement Service]
+    subgraph "Payment Layer"
+        Q402[q402 Protocol<br/>EIP-7702 on BSC Testnet]
+        Middleware[Payment Middleware]
+        Facilitator[Facilitator Service]
     end
     
-    subgraph "Blockchain"
-        Blockchain[BSC/EVM Network]
-        Contract[Implementation Contract<br/>SignatureBasedExecutorV2]
+    subgraph "External Services"
+        CGPT[ChainGPT APIs<br/>@chaingpt/smartcontractgenerator<br/>@chaingpt/smartcontractauditor<br/>@chaingpt/nft]
+        BSC[BNB Smart Chain<br/>Testnet]
     end
     
-    Client -->|1. Request Resource| Server
-    Server -->|2. 402 Payment Required| Client
-    Client -->|3. Create & Sign Payment| Client
-    Client -->|4. X-PAYMENT Header| Middleware
-    Middleware -->|5. Verify Payment| Facilitator
-    Facilitator -->|6. Check Signatures| Verify
-    Verify -->|7. Verification Result| Middleware
-    Middleware -->|8. Settle Payment| Facilitator
-    Facilitator -->|9. Submit Transaction| Settle
-    Settle -->|10. EIP-7702 Transaction| Blockchain
-    Blockchain -->|11. Execute Transfer| Contract
-    Contract -->|12. Transfer Tokens| Blockchain
-    Blockchain -->|13. Transaction Receipt| Settle
-    Settle -->|14. Settlement Result| Middleware
-    Middleware -->|15. Resource + X-PAYMENT-RESPONSE| Client
+    UI -->|1. Request AI Service| API
+    API -->|2. Check Payment| Middleware
+    Middleware -->|3. Verify Payment| Q402
+    Q402 -->|4. EIP-7702 Transaction| Facilitator
+    Facilitator -->|5. Sponsor Gas| BSC
+    BSC -->|6. Execute Payment| Q402
+    Q402 -->|7. Payment Verified| Middleware
+    Middleware -->|8. Allow Request| API
+    API -->|9. Call ChainGPT| CGPT
+    CGPT -->|10. Return AI Result| API
+    API -->|11. Return Response| UI
 ```
 
-## Complete Payment Flow
+## Core Features
 
-### Sequence Diagram: End-to-End Payment Process
+### 🤖 AI-Powered Tools
+- **Smart Contract Generator**: Generate Solidity contracts from natural language descriptions
+- **Contract Auditor**: Security audit reports with vulnerability detection
+- **NFT Generator**: Create NFT metadata and images using AI
 
-```mermaid
-sequenceDiagram
-    participant User as User (EOA)
-    participant Client as Client SDK
-    participant Server as Resource Server
-    participant Middleware as x402 Middleware
-    participant Facilitator as Facilitator Service
-    participant Blockchain as BSC Network
-    participant Contract as Implementation Contract
+### 💰 Pay-Per-Call Model
+- **Gasless Payments**: Users sign transactions, facilitator pays gas
+- **BSC Testnet**: All payments processed on BNB Smart Chain testnet
+- **ERC-20 Tokens**: Pay with any ERC-20 token (USDT, BUSD, etc.)
+- **No Approvals Needed**: EIP-7702 eliminates the need for token approvals
 
-    Note over User,Contract: Phase 1: Payment Request & Preparation
-    
-    User->>Client: Request resource access
-    Client->>Server: GET /api/premium
-    Server->>Middleware: Check payment status
-    Middleware->>Client: 402 Payment Required<br/>(paymentDetails)
-    
-    Note over User,Contract: Phase 2: Client Creates Payment Signature
-    
-    Client->>Client: prepareWitness()<br/>Create EIP-712 message
-    Client->>Client: signWitness()<br/>Sign with user's private key
-    Client->>Client: prepareAuthorization()<br/>Create EIP-7702 auth tuple
-    Client->>Client: signAuthorization()<br/>Sign auth tuple
-    Client->>Client: createPaymentHeader()<br/>Combine & encode to Base64
-    
-    Note over User,Contract: Phase 3: Payment Submission & Verification
-    
-    Client->>Server: GET /api/premium<br/>+ X-PAYMENT header
-    Server->>Middleware: Extract X-PAYMENT header
-    Middleware->>Middleware: decodeBase64()<br/>Parse SignedPaymentPayload
-    
-    alt Auto-settle enabled
-        Middleware->>Facilitator: POST /verify<br/>(payment payload)
-        Facilitator->>Facilitator: verifyPaymentWithChecks()<br/>1. Check whitelist<br/>2. Verify EIP-712 signature<br/>3. Verify EIP-7702 authorization<br/>4. Check deadline & nonce
-        Facilitator->>Middleware: Verification Result ✅
-        
-        Note over User,Contract: Phase 4: Settlement
-        
-        Middleware->>Facilitator: POST /settle<br/>(payment payload)
-        Facilitator->>Facilitator: settlePaymentWithMonitoring()<br/>1. Encode function call<br/>2. Construct EIP-7702 tx<br/>3. Prepare authorization list
-        Facilitator->>Blockchain: Send Type 0x04 Transaction<br/>(from: Facilitator, to: User EOA)
-        
-        Note over User,Contract: Phase 5: On-Chain Execution
-        
-        Blockchain->>Contract: Execute in User EOA context<br/>(delegated execution)
-        Contract->>Contract: executeTransfer()<br/>1. Verify witness signature<br/>2. Check nonce & deadline<br/>3. Transfer ERC-20 tokens
-        Contract->>Blockchain: Transfer tokens<br/>(from: User, to: Recipient)
-        Blockchain->>Facilitator: Transaction Receipt ✅
-        Facilitator->>Middleware: Settlement Result<br/>(txHash, blockNumber)
-        Middleware->>Middleware: Generate X-PAYMENT-RESPONSE header
-    else Verification only
-        Middleware->>Facilitator: POST /verify
-        Facilitator->>Middleware: Verification Result ✅
-    end
-    
-    Note over User,Contract: Phase 6: Resource Delivery
-    
-    Middleware->>Server: Payment verified ✅
-    Server->>Client: 200 OK<br/>+ Resource Data<br/>+ X-PAYMENT-RESPONSE header
-    Client->>User: Display resource
+### 🔒 Security & Safety
+- **Basic Safety Checks**: Automatic detection of common vulnerabilities
+- **Access Control**: Payment verification before API access
+- **Nonce Protection**: Prevents replay attacks
+- **Deadline Enforcement**: Time-limited payment validity
+
+## How It Works
+
+### Payment Flow
+
+1. **User Requests Service**: User wants to generate a smart contract
+2. **Server Responds with 402**: Server returns payment details (amount, token, recipient)
+3. **User Signs Payment**: User creates EIP-7702 authorization + EIP-712 witness signature
+4. **Payment Header Sent**: User includes `X-PAYMENT` header in request
+5. **Middleware Verifies**: Server verifies payment signature and authorization
+6. **Facilitator Settles**: Facilitator submits EIP-7702 transaction (sponsors gas)
+7. **Payment Executed**: Tokens transferred from user to server on BSC
+8. **API Access Granted**: ChainGPT API called and result returned to user
+
+### Example: Smart Contract Generation
+
+```typescript
+// 1. User requests contract generation
+POST /api/smart-contracts/generate
+{
+  "question": "Create an ERC20 token named Q402"
+}
+
+// 2. Server responds with 402 Payment Required
+{
+  "scheme": "evm/eip7702-delegated-payment",
+  "networkId": "bsc-testnet",
+  "token": "0x...",
+  "amount": "1000000", // 1 USDT
+  "to": "0xServerAddress",
+  "implementationContract": "0x...",
+  "witness": { /* EIP-712 typed data */ },
+  "authorization": { /* EIP-7702 auth tuple */ }
+}
+
+// 3. User signs and includes X-PAYMENT header
+POST /api/smart-contracts/generate
+Headers: {
+  "X-PAYMENT": "base64EncodedPaymentPayload"
+}
+Body: {
+  "question": "Create an ERC20 token named Q402"
+}
+
+// 4. Server verifies payment, calls ChainGPT, returns contract
+{
+  "success": true,
+  "contract": "// SPDX-License-Identifier: MIT\npragma solidity..."
+}
 ```
 
-### Detailed Component Interaction Flow
+## Project Structure
 
-```mermaid
-graph TD
-    subgraph "Client Side"
-        A[User Request] --> B[selectPaymentDetails]
-        B --> C[prepareWitness]
-        C --> D[signWitness<br/>EIP-712]
-        D --> E[prepareAuthorization]
-        E --> F[signAuthorization<br/>EIP-7702]
-        F --> G[createPaymentHeader<br/>Base64 Encode]
-    end
-    
-    subgraph "Server Side"
-        G --> H[Middleware: Extract Header]
-        H --> I{Has X-PAYMENT?}
-        I -->|No| J[Send 402 Response]
-        I -->|Yes| K[decodeBase64]
-        K --> L[verifyPayment]
-    end
-    
-    subgraph "Verification"
-        L --> M[Check Implementation Whitelist]
-        M --> N[Verify EIP-712 Signature]
-        N --> O[Verify EIP-7702 Authorization]
-        O --> P[Check Deadline & Nonce]
-        P --> Q{Valid?}
-    end
-    
-    subgraph "Settlement"
-        Q -->|Yes| R[settlePayment]
-        R --> S[Encode Function Call]
-        S --> T[Construct EIP-7702 Transaction]
-        T --> U[Set authorizationList]
-        U --> V[Send Transaction]
-    end
-    
-    subgraph "On-Chain Execution"
-        V --> W[Blockchain Receives Type 0x04]
-        W --> X[Delegate to Implementation Contract]
-        X --> Y[executeTransfer Function]
-        Y --> Z[Verify Witness Signature]
-        Z --> AA[Check Nonce & Deadline]
-        AA --> AB[Perform ERC-20 Transfer]
-        AB --> AC[Emit Events]
-    end
-    
-    Q -->|No| J
-    AC --> AD[Return Resource + X-PAYMENT-RESPONSE]
+```
+Q402/
+├── frontend/                    # Next.js frontend application
+│   ├── app/
+│   │   ├── api/                # API routes
+│   │   │   ├── smart-contracts/ # Contract generation endpoints
+│   │   │   ├── contract-auditor/# Audit endpoints
+│   │   │   └── nft-generate/    # NFT generation endpoints
+│   │   ├── smart-contracts/     # Contract generator UI
+│   │   ├── contract-auditor/   # Auditor UI
+│   │   └── nft-generator/       # NFT generator UI
+│   ├── components/              # React components
+│   └── lib/
+│       ├── contracts/           # Pre-made contracts (Q402.sol)
+│       └── x402-server.ts       # q402 server integration
+│
+├── packages/                    # q402 protocol packages
+│   ├── core/                    # Core SDK (@q402/core)
+│   ├── facilitator/            # Facilitator service
+│   ├── middleware-express/     # Express middleware
+│   └── middleware-hono/        # Hono middleware
+│
+└── specs/                      # Protocol specifications
 ```
 
-### EIP-7702 Transaction Structure
+## Features Breakdown
 
-```mermaid
-graph LR
-    subgraph "EIP-7702 Transaction (Type 0x04)"
-        A[Transaction Fields]
-        A --> B[to: User EOA Address]
-        A --> C[data: Function Call Data]
-        A --> D[authorizationList: Array]
-        A --> E[from: Facilitator Address]
-        A --> F[gasLimit, maxFeePerGas, etc.]
-    end
-    
-    subgraph "Authorization Tuple"
-        D --> G[chainId: 56]
-        D --> H[address: Implementation Contract]
-        D --> I[nonce: User's Auth Nonce]
-        D --> J[signature: r, s, yParity]
-    end
-    
-    subgraph "Function Call Data"
-        C --> K[Function: executeTransfer]
-        K --> L[owner: User Address]
-        K --> M[facilitator: Facilitator Address]
-        K --> N[token: ERC-20 Address]
-        K --> O[recipient: Server Address]
-        K --> P[amount: Payment Amount]
-        K --> Q[nonce: Application Nonce]
-        K --> R[deadline: Expiration Time]
-        K --> S[signature: Witness Signature]
-    end
-    
-    subgraph "Execution Flow"
-        B --> T[Network Pushes Contract Code]
-        T --> U[User EOA Temporarily Has Contract Code]
-        U --> V[Contract Executes in User Context]
-        V --> W[Contract Calls token.transferFrom]
-        W --> X[Transfer Succeeds<br/>No Approval Needed!]
-    end
-```
+### 1. Smart Contract Generator
 
-## Code Flow: Key Functions
+**Endpoint**: `/api/smart-contracts/generate`
 
-### Client-Side Flow
+- **Input**: Natural language description of desired contract
+- **Output**: Complete Solidity contract code
+- **Special Feature**: Pre-made ERC20 token contract for "Q402" requests
+- **Payment**: Pay-per-generation model
 
-```mermaid
-graph TD
-    Start[User Initiates Payment] --> Select[selectPaymentDetails]
-    Select --> PrepareWit[prepareWitness<br/>Creates EIP-712 message<br/>owner, token, amount, to, deadline, paymentId, nonce]
-    PrepareWit --> SignWit[signWitness<br/>Signs with user private key<br/>Returns witnessSignature]
-    SignWit --> PrepareAuth[prepareAuthorization<br/>Creates auth tuple<br/>chainId, implementationAddress, nonce]
-    PrepareAuth --> SignAuth[signAuthorization<br/>Signs auth tuple<br/>Returns signed authorization]
-    SignAuth --> CreateHeader[createPaymentHeader<br/>Combines witness + authorization<br/>Encodes to Base64]
-    CreateHeader --> Send[Send X-PAYMENT Header]
-```
+**Example**:
+- Input: "Create an ERC20 token named Q402"
+- Output: Complete ERC20 contract with minting, burning, and ownership
 
-### Server-Side Verification Flow
+### 2. Contract Auditor
 
-```mermaid
-graph TD
-    Receive[Receive Request] --> Check{Has X-PAYMENT?}
-    Check -->|No| Send402[Send 402 Response]
-    Check -->|Yes| Decode[decodeBase64<br/>Parse SignedPaymentPayload]
-    Decode --> Verify[verifyPayment]
-    
-    Verify --> CheckWhitelist[Check Implementation Whitelist]
-    CheckWhitelist --> VerifyEIP712[Verify EIP-712 Signature<br/>Recover signer address]
-    VerifyEIP712 --> VerifyEIP7702[Verify EIP-7702 Authorization<br/>Check auth signature]
-    VerifyEIP7702 --> CheckDeadline[Check Deadline]
-    CheckDeadline --> CheckNonce[Check Nonce]
-    
-    CheckNonce --> Valid{Valid?}
-    Valid -->|No| Send402
-    Valid -->|Yes| AttachPayment[Attach payment info to request]
-    
-    AttachPayment --> AutoSettle{Auto-settle?}
-    AutoSettle -->|Yes| Settle[settlePayment]
-    AutoSettle -->|No| Next[Continue to route handler]
-    
-    Settle --> Next
-```
+**Endpoint**: `/api/contract-auditor/audit`
 
-### Facilitator Settlement Flow
+- **Input**: Solidity contract code
+- **Output**: Security audit report with vulnerabilities
+- **Features**:
+  - Basic safety checks (automatic)
+  - AI-powered deep analysis (via ChainGPT)
+  - Vulnerability categorization (Critical, Warning, Info)
+- **Payment**: Pay-per-audit model
 
-```mermaid
-graph TD
-    Receive[Receive /settle Request] --> Validate[Validate Payload Schema]
-    Validate --> GetClients[Get Network Clients]
-    GetClients --> SettlePay[settlePaymentWithMonitoring]
-    
-    SettlePay --> EncodeFunc[Encode executeTransfer Function<br/>With witness signature]
-    EncodeFunc --> PrepareAuth[Prepare Authorization Tuple<br/>From payload]
-    PrepareAuth --> ConstructTx[Construct EIP-7702 Transaction<br/>Type: 0x04<br/>To: User EOA<br/>Data: Function call<br/>authorizationList: [tuple]]
-    
-    ConstructTx --> SendTx[Send Transaction<br/>Facilitator pays gas]
-    SendTx --> Wait[Wait for Confirmation]
-    Wait --> CheckStatus{Status?}
-    
-    CheckStatus -->|Success| ReturnSuccess[Return Settlement Result<br/>txHash, blockNumber]
-    CheckStatus -->|Failed| ReturnError[Return Error]
-```
+**Safety Checks Include**:
+- Reentrancy protection
+- Unchecked arithmetic
+- Dangerous delegatecall usage
+- Missing access controls
+- Zero address checks
+- And more...
 
-## Quick Start
+### 3. NFT Generator
+
+**Endpoint**: `/api/nft-generate`
+
+- **Input**: NFT description or prompt
+- **Output**: NFT metadata and image
+- **Payment**: Pay-per-generation model
+
+## q402 Protocol Integration
+
+This project uses **q402**, which is an implementation of the **x402 protocol** on BSC testnet using EIP-7702 delegated execution.
+
+### Key Differences from Traditional x402
+
+| Feature | Traditional x402 | q402 (This Project) |
+|---------|-----------------|---------------------|
+| Token Support | Requires ERC-3009 | Works with any ERC-20 |
+| Approvals | Requires pre-approval | No approvals needed |
+| Gas Payment | User pays gas | Facilitator sponsors gas |
+| Network | Ethereum | BSC Testnet |
+| Execution | ERC-3009 transfer | EIP-7702 delegated execution |
+
+### EIP-7702 Benefits
+
+- **No Token Upgrades**: Works with existing ERC-20 tokens
+- **Gasless for Users**: Facilitator pays all gas fees
+- **Single Signature**: User signs once, payment executes automatically
+- **No Approvals**: Direct transfers without allowance mechanism
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and pnpm
+- BSC Testnet wallet with test tokens
+- ChainGPT API key (optional - fallback responses available)
 
 ### Installation
 
 ```bash
+# Install dependencies
+cd frontend
+npm install
+
+# Or use pnpm (recommended)
 pnpm install
 ```
 
-### Usage
+### Configuration
 
-#### 1. Client-Side Payment Creation
-
-```typescript
-import { createPaymentHeader, selectPaymentDetails } from "@q402/core";
-import { privateKeyToAccount } from "viem/accounts";
-
-// Create account
-const account = privateKeyToAccount("0x...");
-
-// Fetch 402 response from server
-const response = await fetch("https://api.example.com/resource");
-const paymentRequired = await response.json();
-
-// Select payment method
-const paymentDetails = selectPaymentDetails(paymentRequired, {
-  network: "bsc-testnet",
-});
-
-// Create signed payment header
-const paymentHeader = await createPaymentHeader(account, paymentDetails);
-
-// Make request with payment
-const result = await fetch("https://api.example.com/resource", {
-  headers: {
-    "X-PAYMENT": paymentHeader,
-  },
-});
-```
-
-#### 2. Server-Side Integration (Express)
-
-```typescript
-import express from "express";
-import { createQ402Middleware } from "@q402/middleware-express";
-import { createWalletClient, http } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { bscTestnet } from "viem/chains";
-
-const app = express();
-
-// Create sponsor wallet
-const sponsor = privateKeyToAccount(process.env.SPONSOR_KEY);
-const walletClient = createWalletClient({
-  account: sponsor,
-  chain: bscTestnet,
-  transport: http(),
-});
-
-// Apply q402 middleware
-app.use(
-  createQ402Middleware({
-    network: "bsc-testnet",
-    recipientAddress: "0x...",
-    implementationContract: "0x...",
-    verifyingContract: "0x...",
-    walletClient,
-    endpoints: [
-      {
-        path: "/api/premium",
-        amount: "1000000", // 1 USDT (6 decimals)
-        token: "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
-        description: "Premium API access",
-      },
-    ],
-  })
-);
-
-// Protected route
-app.get("/api/premium", (req, res) => {
-  res.json({
-    data: "Premium content",
-    payer: req.payment?.payer,
-  });
-});
-
-app.listen(3000);
-```
-
-#### 3. Running the Facilitator
-
-```bash
-cd packages/facilitator
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your settings
-
-# Start facilitator
-pnpm run dev
-```
-
-The facilitator exposes REST endpoints:
-- `POST /verify` - Verify payment signatures
-- `POST /settle` - Submit payment to blockchain
-- `GET /supported` - List supported networks
-- `GET /health` - Health check
-
-## Contract Interfaces
-
-### Single Payment
-
-```solidity
-function executeTransfer(
-  address owner,
-  address facilitator,
-  address token,
-  address recipient,
-  uint256 amount,
-  uint256 nonce,
-  uint256 deadline,
-  bytes calldata signature
-) external;
-```
-
-### Implementation Contract Flow
-
-```mermaid
-graph TD
-    A[EIP-7702 Transaction Arrives] --> B[Network Pushes Contract Code to User EOA]
-    B --> C[Contract Code Executes in User Context]
-    C --> D[executeTransfer Called]
-    D --> E[Recover Signer from Witness Signature]
-    E --> F{Signer == owner?}
-    F -->|No| G[Revert: Invalid Signature]
-    F -->|Yes| H[Check Nonce]
-    H --> I{Nonce Valid?}
-    I -->|No| J[Revert: Invalid Nonce]
-    I -->|Yes| K[Check Deadline]
-    K --> L{Deadline Valid?}
-    L -->|No| M[Revert: Expired]
-    L -->|Yes| N[Increment Nonce]
-    N --> O[Call token.transferFrom]
-    O --> P[Transfer from User to Recipient]
-    P --> Q[Emit Payment Event]
-    Q --> R[Return Success]
-```
-
-## Payload Examples
-
-### Witness (EIP-712)
-
-```json
-{
-  "domain": {
-    "name": "q402",
-    "version": "1",
-    "chainId": 56,
-    "verifyingContract": "0xServerVerifier"
-  },
-  "types": {
-    "Witness": [
-      {"name":"owner","type":"address"},
-      {"name":"token","type":"address"},
-      {"name":"amount","type":"uint256"},
-      {"name":"to","type":"address"},
-      {"name":"deadline","type":"uint256"},
-      {"name":"paymentId","type":"bytes32"},
-      {"name":"nonce","type":"uint256"}
-    ]
-  },
-  "primaryType": "Witness",
-  "message": {
-    "owner": "0xOwner",
-    "token": "0xTokenAddress",
-    "amount": "1000000",
-    "to": "0xServerSettlementWallet",
-    "deadline": "1735660000",
-    "paymentId": "0xdeadbeef...",
-    "nonce": "123456789"
-  }
-}
-```
-
-### Authorization (EIP-7702)
-
-```json
-{
-  "chain_id": 56,
-  "address": "0xImplementation",
-  "nonce": 42,
-  "y_parity": 1,
-  "r": "0x...",
-  "s": "0x..."
-}
-```
-
-Digest: `keccak(0x05 || rlp([chain_id, address, nonce]))`, signed by owner.
-
-## HTTP 402 Integration
-
-### Server Returns `paymentDetails`
-
-```json
-{
-  "scheme": "evm/eip7702-delegated-payment",
-  "networkId": "bsc-mainnet",
-  "token": "0xTokenAddress",
-  "amount": "1000000",
-  "to": "0xServerSettlementWallet",
-  "implementationContract": "0xImplementation",
-  "witness": { /* EIP-712 typed-data */ },
-  "authorization": { /* auth tuple template */ }
-}
-```
-
-### Client Sends `X-PAYMENT` Header
-
-Base64-encoded JSON containing both signed witness and signed authorization.
-
-## Security
-
-- **Dual Nonce**: EIP-7702 auth nonce + application nonce/paymentId
-- **Short Deadline**: Expires after timeout, limits attack window
-- **Implementation Whitelist**: Only approved contracts can be delegated to
-- **Per-Account Limits**: Token amount caps, recipient blacklist, rate limits
-- **Immutable Event Logs**: Audit-friendly, traceable
-- **Revocation Path**: Users can clear delegation via EIP-7702 tx with `address = 0x0`
-
-## Supported Networks
-
-- **BNB Smart Chain** (Mainnet/Testnet) - EIP-7702 enabled
-- Any EIP-7702 enabled EVM chain (configure RPC accordingly)
-
-## Observability
-
-- OpenTelemetry compatible traces/metrics
-- Export via OTLP to Prometheus/Grafana/Honeycomb
-- HTTP method, status, latency, routing metrics
-
-## Configuration
-
-### Environment Variables
+Create a `.env.local` file in the `frontend/` directory:
 
 ```env
-# Server
-HOST=0.0.0.0
-PORT=8080
+# ChainGPT API (optional - will use fallback if not set)
+CHAINGPT_API_KEY=your_chaingpt_api_key
 
-# Signer
-SPONSOR_PRIVATE_KEY=0x...
-
-# RPC URLs (at least one required for each network)
-RPC_URL_BSC_MAINNET=https://bsc-dataseed1.binance.org
-RPC_URL_BSC_TESTNET=https://data-seed-prebsc-1-s1.binance.org:8545
-
-# Whitelist
-IMPLEMENTATION_WHITELIST=0x...,0x...
+# q402 Configuration
+Q402_NETWORK=bsc-testnet
+Q402_IMPLEMENTATION_CONTRACT=0x...
+Q402_RECIPIENT_ADDRESS=0x...
+Q402_TOKEN_ADDRESS=0x...  # USDT or BUSD on testnet
 ```
 
-## Roadmap
+### Running the Application
 
-- ✅ BSC mainnet/testnet support with sponsored payments & batch routing
-- ✅ Complete TypeScript implementation with full type safety
-- ✅ Express and Hono middleware support
-- ✅ Standalone facilitator service
-- ✅ Comprehensive documentation with architecture diagrams
-- 🚧 Witness extensions (jurisdiction/KYC/identity weighting)
-- 🚧 Smart nonce strategies & storage optimization
-- 🚧 Cross-chain expansion to more EIP-7702 networks
+```bash
+# Development mode
+cd frontend
+npm run dev
 
-## Packages
+# Production build
+npm run build
+npm start
+```
 
-- **[@q402/core](./packages/core)** - Core SDK with client functions and type definitions
-- **[@q402/facilitator](./packages/facilitator)** - Independent facilitator service
-- **[@q402/middleware-express](./packages/middleware-express)** - Express middleware
-- **[@q402/middleware-hono](./packages/middleware-hono)** - Hono middleware
+The application will be available at `http://localhost:3000`
 
-## Getting Started
+## Usage Examples
 
-For production deployment and usage:
+### 1. Generate Smart Contract
 
-1. **Quick Start**: See [Docker Deployment Guide](./docs/DOCKER_DEPLOYMENT.md)
-2. **Architecture**: Review [System Architecture](./docs/ARCHITECTURE.md)
-3. **Security**: Read [Important Notices](./docs/IMPORTANT_NOTICE.md)
+```typescript
+// Frontend code
+const response = await fetch('/api/smart-contracts/generate', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-PAYMENT': paymentHeader, // q402 payment header
+  },
+  body: JSON.stringify({
+    question: 'Create an ERC20 token named Q402',
+  }),
+});
+
+const { contract } = await response.json();
+console.log(contract); // Complete Solidity code
+```
+
+### 2. Audit Contract
+
+```typescript
+const response = await fetch('/api/contract-auditor/audit', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-PAYMENT': paymentHeader,
+  },
+  body: JSON.stringify({
+    question: contractCode, // Solidity contract code
+  }),
+});
+
+const { audit } = await response.json();
+console.log(audit); // Security audit report
+```
+
+## Payment Details
+
+### Supported Tokens
+- USDT (BSC Testnet)
+- BUSD (BSC Testnet)
+- Any ERC-20 token on BSC Testnet
+
+### Pricing Model
+- **Pay-per-call**: Each API request requires payment
+- **Amount**: Configurable per endpoint
+- **Gas**: Sponsored by facilitator (user pays $0 gas)
+
+### Payment Flow
+1. User receives 402 Payment Required response
+2. User signs EIP-7702 authorization + EIP-712 witness
+3. User includes `X-PAYMENT` header in subsequent request
+4. Server verifies and facilitator settles payment
+5. API access granted
+
+## API Endpoints
+
+### Smart Contract Generation
+- `POST /api/smart-contracts/generate` - Generate contract (full response)
+- `POST /api/smart-contracts/stream` - Generate contract (streaming)
+
+### Contract Auditing
+- `POST /api/contract-auditor/audit` - Audit contract (full report)
+- `POST /api/contract-auditor/stream` - Audit contract (streaming)
+
+### NFT Generation
+- `POST /api/nft-generate` - Generate NFT metadata and image
+
+## Frontend Pages
+
+- `/` - Landing page
+- `/smart-contracts` - Smart contract generator UI
+- `/contract-auditor` - Contract auditor UI
+- `/nft-generator` - NFT generator UI
+- `/chat` - Chat interface (coming soon)
+- `/402` - q402 payment demo
+
+## Technology Stack
+
+- **Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Blockchain**: viem, wagmi, RainbowKit
+- **Payment Protocol**: q402 (EIP-7702 on BSC Testnet)
+- **AI Services**: ChainGPT SDKs
+- **Styling**: Tailwind CSS with custom frame borders
+
+## Security Features
+
+### Payment Security
+- ✅ EIP-712 signature verification
+- ✅ EIP-7702 authorization validation
+- ✅ Nonce-based replay protection
+- ✅ Deadline enforcement
+- ✅ Implementation contract whitelist
+
+### Code Security
+- ✅ Basic vulnerability scanning
+- ✅ AI-powered security analysis
+- ✅ Access control verification
+- ✅ Input validation
+
+## Development Status
+
+### ✅ Completed
+- Smart contract generator with ERC20 template
+- Contract auditor with basic safety checks
+- NFT generator integration
+- q402 payment middleware
+- Frontend UI components
+- Payment flow implementation
+
+### 🚧 In Progress
+- Full ChainGPT API integration
+- Enhanced error handling
+- Payment history tracking
+- User dashboard
+
+### 📋 Planned
+- Batch payment support
+- Multi-token support
+- Payment analytics
+- Admin dashboard
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+This project was built for the **Quack × ChainGPT Super Web3 Agent Hackathon**. Contributions are welcome!
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ## License
 
 Apache-2.0
 
-## Documentation
-
-For detailed documentation, see the [`docs/`](./docs/) folder:
-
-- [Architecture](./docs/ARCHITECTURE.md) - System architecture and design
-- [Standards Compliance](./docs/STANDARDS_COMPLIANCE.md) - x402 protocol compliance
-- [Deployment](./docs/DOCKER_DEPLOYMENT.md) - Docker and deployment instructions
-- [Deployment Readiness](./docs/DEPLOYMENT_READINESS.md) - Current implementation status
-
 ## Acknowledgments
 
-This project implements the [x402 protocol](https://github.com/coinbase/x402) standard with EIP-7702 extensions. q402 follows the official x402 specifications for:
+- **q402 Protocol**: EIP-7702 implementation of x402 on BSC
+- **ChainGPT**: AI-powered blockchain tools
+- **x402 Protocol**: Original payment protocol by Coinbase
+- **Quack AI**: Hackathon organizer and ecosystem partner
 
-- **HTTP 402 semantics** - Standard Payment Required responses
-- **Header formats** - X-PAYMENT and X-PAYMENT-RESPONSE headers
-- **Facilitator API** - Standard /verify, /settle, /supported endpoints
-- **Client-server flow** - Compatible with any x402 implementation
+## Related Projects
 
-The q402 implementation extends the standard with EIP-7702 delegated execution:
-- ✅ **Gasless payments** - Users never pay gas fees
-- ✅ **Universal ERC-20** - No token contract modifications needed
-- ✅ **No approvals** - Direct transfers without pre-approval
-- ✅ **Standard compliance** - Fully compatible with x402 ecosystem
-
-## About Quack AI
-
-q402 is developed by Quack AI to enhance governance execution and payment flows in decentralized ecosystems. Our governance scoring engine integrates directly with payment settlement for trusted, auditable proposal execution.
-
-For more information: [Quack AI Website](https://quackai.ai/)
+- [q402 Protocol](../README.md) - Core payment protocol implementation
+- [x402 Protocol](https://github.com/coinbase/x402) - Original Coinbase implementation
+- [ChainGPT](https://chaingpt.org/) - AI-powered blockchain tools
 
 ---
 
-**Built with ❤️ for the decentralized web**
+**Built with ❤️ for the Quack × ChainGPT Super Web3 Agent Hackathon**

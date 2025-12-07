@@ -12,25 +12,50 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Note: In production, you would initialize the ChainGPT NFT SDK here
-    // const { Nft } = require('@chaingpt/nft');
-    // const nft = new Nft({ apiKey: process.env.CHAINGPT_API_KEY });
-    // For image generation only:
-    // const result = await nft.generateImage({ prompt, model, enhance, steps, width, height });
-    // For NFT generation with minting (requires chainId and walletAddress):
-    // const result = await nft.generateNft({ prompt, model, enhance, steps, width, height, chainId, walletAddress });
+    // Initialize the ChainGPT NFT SDK
+    const { Nft } = require('@chaingpt/nft');
+    const apiKey = process.env.CHAINGPT_API_KEY;
+    
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "ChainGPT API key is not configured" },
+        { status: 500 }
+      );
+    }
 
-    // For now, return a mock response
-    // Replace this with actual SDK implementation when API key is available
-    return NextResponse.json({
-      success: true,
-      message: "NFT generation initiated. Please configure ChainGPT API key to enable full functionality.",
-      imageUrl: null,
-      chainId: chainId || 97, // Default to BNB Testnet
-      // In production, you would return:
-      // imageUrl: result.data.data (base64 or URL)
-      // collectionId: result.data.collectionId (if using generateNft)
-    });
+    const nft = new Nft({ apiKey });
+    
+    try {
+      // Generate image (for now, just image generation)
+      const result = await nft.generateImage({ 
+        prompt, 
+        model, 
+        enhance, 
+        steps, 
+        width, 
+        height 
+      });
+
+      // Convert image buffer to base64 data URL
+      const imageBuffer = Buffer.from(result.data.data);
+      const imageBase64 = imageBuffer.toString('base64');
+      const imageUrl = `data:image/jpeg;base64,${imageBase64}`;
+
+      return NextResponse.json({
+        success: true,
+        message: "NFT image generated successfully",
+        imageUrl: imageUrl,
+        chainId: chainId || 97,
+      });
+    } catch (sdkError: any) {
+      console.error("ChainGPT SDK error:", sdkError);
+      return NextResponse.json(
+        {
+          error: sdkError.message || "Failed to generate NFT image",
+        },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error("NFT generation error:", error);
     return NextResponse.json(

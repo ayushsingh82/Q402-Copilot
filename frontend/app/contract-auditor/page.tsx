@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export default function ContractAuditorPage() {
   const [question, setQuestion] = useState("");
-  const [chatHistory, setChatHistory] = useState<"on" | "off">("off");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +28,7 @@ export default function ContractAuditorPage() {
         },
         body: JSON.stringify({
           question,
-          chatHistory,
+          chatHistory: "off",
         }),
       });
 
@@ -65,7 +64,7 @@ export default function ContractAuditorPage() {
         },
         body: JSON.stringify({
           question,
-          chatHistory,
+          chatHistory: "off",
         }),
       });
 
@@ -99,9 +98,24 @@ export default function ContractAuditorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
-      <Navbar />
-      <div className="container mx-auto px-6 py-12">
+    <div className="min-h-screen text-white font-sans relative">
+      {/* Full page background image */}
+      <div 
+        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://thumbs.dreamstime.com/b/dark-clouds-gathering-lightning-thunder-stormy-sky-spectacular-display-nature-s-power-fury-387460417.jpg)',
+          zIndex: 0
+        }}
+      />
+      {/* Dark overlay for better text readability */}
+      <div className="fixed inset-0 w-full h-full bg-black/60" style={{ zIndex: 1 }} />
+      
+      {/* Content with higher z-index */}
+      <div className="relative" style={{ zIndex: 10 }}>
+        <div className="bg-black">
+          <Navbar />
+        </div>
+        <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
@@ -112,7 +126,7 @@ export default function ContractAuditorPage() {
             </p>
           </div>
 
-          <div className="frame-border p-8 space-y-6 relative">
+          <div className="frame-border p-8 space-y-6 relative" style={{ zIndex: 20 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
@@ -141,30 +155,20 @@ contract Counter {
               />
             </div>
 
-            <div>
-              <label className="block text-zinc-300 mb-2">Chat History</label>
-              <select
-                value={chatHistory}
-                onChange={(e) => setChatHistory(e.target.value as "on" | "off")}
-                className="w-full px-4 py-2 bg-black border border-white text-white rounded"
-              >
-                <option value="off">Off</option>
-                <option value="on">On</option>
-              </select>
-            </div>
-
-            <div className="flex gap-4">
+            <div className="flex gap-4" style={{ zIndex: 25 }}>
               <button
                 onClick={handleAuditBlob}
                 disabled={loading || streaming}
-                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
+                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50 relative"
+                style={{ zIndex: 26 }}
               >
                 {loading ? "Auditing..." : "Audit (Full Report)"}
               </button>
               <button
                 onClick={handleAuditStream}
                 disabled={loading || streaming}
-                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50"
+                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50 relative"
+                style={{ zIndex: 26 }}
               >
                 {streaming ? "Streaming..." : "Audit (Stream)"}
               </button>
@@ -177,7 +181,7 @@ contract Counter {
             )}
 
             {result && (
-              <div className="p-4 bg-zinc-900 frame-border rounded relative">
+              <div className="p-4 bg-black frame-border rounded relative" style={{ zIndex: 50 }}>
                 <div className="corner-top-left"></div>
                 <div className="corner-top-right"></div>
                 <div className="corner-bottom-left"></div>
@@ -190,6 +194,7 @@ contract Counter {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

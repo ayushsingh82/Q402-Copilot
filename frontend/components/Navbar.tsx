@@ -13,9 +13,10 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const needsBlackBg = pathname === "/contract-auditor" || pathname === "/nft-generator" || pathname === "/smart-contracts" || pathname === "/";
 
   return (
-    <nav className="w-full border-b border-white relative">
+    <nav className={`w-full border-b border-white relative ${needsBlackBg ? 'bg-black' : ''}`} style={{ zIndex: 15 }}>
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}

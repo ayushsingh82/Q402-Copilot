@@ -5,11 +5,11 @@ import { useState } from "react";
 
 export default function SmartContractsPage() {
   const [question, setQuestion] = useState("");
-  const [chatHistory, setChatHistory] = useState<"on" | "off">("off");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [streaming, setStreaming] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleGenerateBlob = async () => {
     if (!question.trim()) {
@@ -29,7 +29,7 @@ export default function SmartContractsPage() {
         },
         body: JSON.stringify({
           question,
-          chatHistory,
+          chatHistory: "off",
         }),
       });
 
@@ -65,7 +65,7 @@ export default function SmartContractsPage() {
         },
         body: JSON.stringify({
           question,
-          chatHistory,
+          chatHistory: "off",
         }),
       });
 
@@ -98,10 +98,35 @@ export default function SmartContractsPage() {
     }
   };
 
+  const handleCopy = async () => {
+    if (!result) return;
+    
+    try {
+      await navigator.clipboard.writeText(result);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
-      <Navbar />
-      <div className="container mx-auto px-6 py-12">
+    <div className="min-h-screen text-white font-sans relative">
+      {/* Full page background image */}
+      <div 
+        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://thumbs.dreamstime.com/b/dark-clouds-gathering-lightning-thunder-stormy-sky-spectacular-display-nature-s-power-fury-387460417.jpg)',
+          zIndex: 0
+        }}
+      />
+      {/* Dark overlay for better text readability */}
+      <div className="fixed inset-0 w-full h-full bg-black/60" style={{ zIndex: 1 }} />
+      
+      {/* Content with higher z-index */}
+      <div className="relative" style={{ zIndex: 10 }}>
+        <Navbar />
+        <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
@@ -112,7 +137,7 @@ export default function SmartContractsPage() {
             </p>
           </div>
 
-          <div className="frame-border p-8 space-y-6 relative">
+          <div className="frame-border p-8 space-y-6 relative" style={{ zIndex: 20 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
@@ -126,18 +151,6 @@ export default function SmartContractsPage() {
                 rows={6}
                 placeholder="Describe the smart contract you want to generate, e.g., 'Create an ERC-20 token contract with a mint function'"
               />
-            </div>
-
-            <div>
-              <label className="block text-zinc-300 mb-2">Chat History</label>
-              <select
-                value={chatHistory}
-                onChange={(e) => setChatHistory(e.target.value as "on" | "off")}
-                className="w-full px-4 py-2 bg-black border border-white text-white rounded"
-              >
-                <option value="off">Off</option>
-                <option value="on">On</option>
-              </select>
             </div>
 
             <div className="flex gap-4">
@@ -164,12 +177,31 @@ export default function SmartContractsPage() {
             )}
 
             {result && (
-              <div className="p-4 bg-zinc-900 frame-border rounded relative">
+              <div className="p-4 bg-black frame-border rounded relative" style={{ zIndex: 30 }}>
                 <div className="corner-top-left"></div>
                 <div className="corner-top-right"></div>
                 <div className="corner-bottom-left"></div>
                 <div className="corner-bottom-right"></div>
-                <h3 className="text-lg font-semibold mb-2 text-white">Generated Contract:</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-lg font-semibold text-white">Generated Contract:</h3>
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-2 px-3 py-1.5 border border-white text-white hover:bg-zinc-800 transition-colors rounded text-sm"
+                    title="Copy code"
+                  >
+                    {copied ? (
+                      <>
+                        <span>✅</span>
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>📋</span>
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
                 <pre className="text-sm text-zinc-300 whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto">
                   {result}
                 </pre>
@@ -177,6 +209,7 @@ export default function SmartContractsPage() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

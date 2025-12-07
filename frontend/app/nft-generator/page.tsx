@@ -61,9 +61,22 @@ export default function NFTGeneratorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
-      <Navbar />
-      <div className="container mx-auto px-6 py-12">
+    <div className="min-h-screen text-white font-sans relative">
+      {/* Full page background image */}
+      <div 
+        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://thumbs.dreamstime.com/b/dark-clouds-gathering-lightning-thunder-stormy-sky-spectacular-display-nature-s-power-fury-387460417.jpg)',
+          zIndex: 0
+        }}
+      />
+      {/* Dark overlay for better text readability */}
+      <div className="fixed inset-0 w-full h-full bg-black/60" style={{ zIndex: 1 }} />
+      
+      {/* Content with higher z-index */}
+      <div className="relative" style={{ zIndex: 10 }}>
+        <Navbar />
+        <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
@@ -74,7 +87,7 @@ export default function NFTGeneratorPage() {
             </p>
           </div>
 
-          <div className="frame-border p-8 space-y-6 relative">
+          <div className="frame-border p-8 space-y-6 relative" style={{ zIndex: 20 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
@@ -179,7 +192,7 @@ export default function NFTGeneratorPage() {
             )}
 
             {result && (
-              <div className="p-4 bg-zinc-900 frame-border rounded relative">
+              <div className="p-4 bg-zinc-900 frame-border rounded relative" style={{ zIndex: 30 }}>
                 <div className="corner-top-left"></div>
                 <div className="corner-top-right"></div>
                 <div className="corner-bottom-left"></div>
@@ -193,6 +206,7 @@ export default function NFTGeneratorPage() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
