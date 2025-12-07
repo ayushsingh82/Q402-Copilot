@@ -1,13 +1,117 @@
 @import "tailwindcss";
-@import "./index.css";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
 
 @theme inline {
-  --color-background: var(--bg);
-  --color-foreground: var(--text);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+body {
+  background: #000000;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Georgia', 'Palatino', 'Times New Roman', serif;
+  font-family: cursive;
+}
+
+/* Highlight effects for headings */
+.highlight-blue {
+  color: white;
+  background-color: #3b82f6; /* blue-500 */
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  border-radius: 0.25rem;
+}
+
+.highlight-red {
+  color: white;
+  background-color: #ef4444; /* red-500 */
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  border-radius: 0.25rem;
+}
+
+.highlight-purple {
+  color: white;
+  background-color: #a855f7; /* purple-500 */
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  border-radius: 0.25rem;
+}
+
+.highlight-yellow {
+  color: white;
+  background-color: #eab308; /* yellow-500 */
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  border-radius: 0.25rem;
+}
+
+/* Feature box hover effects */
+.feature-box {
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.feature-box-red:hover {
+  border-color: white;
+  background-color: #ef4444; /* red-500 */
+}
+
+.feature-box-red:hover p {
+  color: white;
+}
+
+.feature-box-purple:hover {
+  border-color: white;
+  background-color: #a855f7; /* purple-500 */
+}
+
+.feature-box-purple:hover p {
+  color: white;
+}
+
+.feature-box-yellow:hover {
+  border-color: white;
+  background-color: #eab308; /* yellow-500 */
+}
+
+.feature-box-yellow:hover p {
+  color: white;
+}
+
+.feature-box-blue:hover {
+  border-color: white;
+  background-color: #3b82f6; /* blue-500 */
+}
+
+.feature-box-blue:hover p {
+  color: white;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.floating-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-animation-delay {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 1.5s;
 }

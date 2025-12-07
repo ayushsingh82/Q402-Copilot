@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: "'SF Mono', 'Fira Code', 'Consolas', monospace" }}>
+      <body className="font-sans antialiased">
         <Providers>
           {children}
         </Providers>

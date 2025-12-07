@@ -1,21 +1,46 @@
-import { base64 } from "@scure/base";
 import type { Hex } from "viem";
 
 /**
  * Encode data to base64 string
+ * Uses native base64 encoding (works in both Node.js and browser)
  */
 export function encodeBase64(data: string | object): string {
   const str = typeof data === "string" ? data : JSON.stringify(data);
-  const bytes = new TextEncoder().encode(str);
-  return base64.encode(bytes);
+  
+  // Use Buffer in Node.js, btoa in browser
+  if (typeof Buffer !== "undefined") {
+    return Buffer.from(str, "utf8").toString("base64");
+  } else {
+    // Browser environment
+    const bytes = new TextEncoder().encode(str);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
 }
 
 /**
  * Decode base64 string to object
+ * Uses native base64 decoding (works in both Node.js and browser)
  */
 export function decodeBase64<T = unknown>(encoded: string): T {
-  const bytes = base64.decode(encoded);
-  const str = new TextDecoder().decode(bytes);
+  let str: string;
+  
+  // Use Buffer in Node.js, atob in browser
+  if (typeof Buffer !== "undefined") {
+    str = Buffer.from(encoded, "base64").toString("utf8");
+  } else {
+    // Browser environment
+    const binary = atob(encoded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    str = new TextDecoder().decode(bytes);
+  }
+  
   return JSON.parse(str) as T;
 }
 

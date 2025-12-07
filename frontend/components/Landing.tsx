@@ -1,11 +1,27 @@
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
+    <div className="min-h-screen bg-black text-white font-sans relative overflow-hidden">
+      {/* Floating Images */}
+      <div className="fixed top-32 left-10 z-10 floating-animation">
+        <img 
+          src="https://docs.chaingpt.org/~gitbook/image?url=https%3A%2F%2F2865549669-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252F02IMVe3hN17zPTDRhn1f%252Flogo%252FomegBsRg6CibklqFfqbR%252FCGPT%2520Favicon%2520256x256.png%3Falt%3Dmedia%26token%3Dfe70270c-c79d-4780-8d41-2e5f5d80eb0d&width=260&dpr=2&quality=100&sign=59eb50c8&sv=2"
+          alt="ChainGPT"
+          className="w-24 h-24 opacity-100 hover:opacity-100 transition-opacity duration-300"
+        />
+      </div>
+      <div className="fixed top-32 right-10 z-10 floating-animation-delay">
+        <img 
+          src="https://moralis.com/wp-content/uploads/web3wiki/682-bnb-chain/637aee18389f7a5e72f04b51_ItmEr7gxAND6VQG4SnWLs2DeKys3Mq9YhOeL7d6Sugc-300x300.png"
+          alt="BNB Chain"
+          className="w-32 h-32 opacity-100 hover:opacity-100 transition-opacity duration-300"
+        />
+      </div>
+
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6 text-white" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
-            Welcome to q402-copilot
+          <h1 className="text-5xl font-bold mb-6 highlight-blue" style={{ fontFamily: 'cursive' }}>
+            Welcome to Q402-copilot
           </h1>
           <p className="text-xl text-zinc-300 mb-12">
             Your Web3 Copilot for BNB Chain. Research, generate, and execute
@@ -18,8 +34,8 @@ export default function Landing() {
       <section className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Feature Box 1 */}
-          <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center">
+            <h3 className="text-2xl font-semibold mb-4 highlight-red" style={{ fontFamily: 'cursive' }}>
               Research & Explain
             </h3>
             <p className="text-zinc-300">
@@ -29,8 +45,8 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 2 */}
-          <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center">
+            <h3 className="text-2xl font-semibold mb-4 highlight-purple" style={{ fontFamily: 'cursive' }}>
               Generate & Audit
             </h3>
             <p className="text-zinc-300">
@@ -40,8 +56,8 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 3 */}
-          <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+          <div className="aspect-square feature-box feature-box-yellow p-6 flex flex-col justify-center items-center text-center">
+            <h3 className="text-2xl font-semibold mb-4 highlight-yellow" style={{ fontFamily: 'cursive' }}>
               Execute Transactions
             </h3>
             <p className="text-zinc-300">
@@ -51,8 +67,8 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 4 */}
-          <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+          <div className="aspect-square feature-box feature-box-blue p-6 flex flex-col justify-center items-center text-center">
+            <h3 className="text-2xl font-semibold mb-4 highlight-blue" style={{ fontFamily: 'cursive' }}>
               Spend Caps
             </h3>
             <p className="text-zinc-300">
@@ -62,8 +78,8 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 5 */}
-          <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center">
+            <h3 className="text-2xl font-semibold mb-4 highlight-red" style={{ fontFamily: 'cursive' }}>
               Allow/Deny Lists
             </h3>
             <p className="text-zinc-300">
@@ -73,8 +89,8 @@ export default function Landing() {
           </div>
 
           {/* Feature Box 6 */}
-          <div className="aspect-square border border-zinc-400 p-6 flex flex-col justify-center items-center text-center">
-            <h3 className="text-2xl font-semibold text-white mb-4" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center">
+            <h3 className="text-2xl font-semibold mb-4 highlight-purple" style={{ fontFamily: 'cursive' }}>
               Risk Warnings
             </h3>
             <p className="text-zinc-300">
@@ -89,7 +105,7 @@ export default function Landing() {
       <section className="container mx-auto px-6 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="border border-zinc-400 p-8">
-            <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
+            <h2 className="text-3xl font-bold mb-6 highlight-yellow" style={{ fontFamily: 'cursive' }}>
               About q402-copilot
             </h2>
             <p className="text-zinc-300 mb-4">
@@ -111,23 +127,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-6 py-12">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="border border-zinc-400 p-12">
-            <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "'Georgia', 'Palatino', serif" }}>
-              Ready to Get Started?
-            </h2>
-            <p className="text-zinc-300 mb-8">
-              Connect your wallet and start chatting with your Web3 copilot.
-              Experience seamless transactions powered by x402 payment protocol.
-            </p>
-            <button className="px-8 py-3 border border-zinc-400 text-white hover:bg-zinc-900 transition-colors">
-              Connect Wallet
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
