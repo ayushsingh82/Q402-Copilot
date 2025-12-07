@@ -1,6 +1,10 @@
-import type { PaymentRequiredResponse, PaymentDetails } from "@q402/core";
-import { PaymentScheme, NetworkConfigs } from "@q402/core";
+import { PaymentScheme, NetworkConfigs, PaymentRequiredResponseSchema, PaymentDetailsSchema } from "@q402/core";
 import type { Address } from "viem";
+import type { z } from "zod";
+
+// Define types from schemas
+type PaymentRequiredResponse = z.infer<typeof PaymentRequiredResponseSchema>;
+type PaymentDetails = z.infer<typeof PaymentDetailsSchema>;
 
 interface DemoConfig {
   network: "bsc-testnet" | "bsc-mainnet";

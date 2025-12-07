@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { useAccount, useWalletClient } from "wagmi";
-import { createPaymentHeaderWithWallet, selectPaymentDetails } from "@q402/core";
-import type { PaymentRequiredResponse, PaymentDetails } from "@q402/core";
+import { createPaymentHeaderWithWallet, selectPaymentDetails, PaymentRequiredResponseSchema, PaymentDetailsSchema } from "@q402/core";
+import type { z } from "zod";
+
+// Define types from schemas
+type PaymentRequiredResponse = z.infer<typeof PaymentRequiredResponseSchema>;
+type PaymentDetails = z.infer<typeof PaymentDetailsSchema>;
 
 export default function X402ClientDemo() {
   const { address, isConnected } = useAccount();

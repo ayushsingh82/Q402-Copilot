@@ -58,7 +58,7 @@ export default function NFTGeneratorPage() {
       <div 
         className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(https://img.freepik.com/free-vector/hand-painted-blue-sky-background-with-fluffy-white-clouds_1048-18892.jpg?semt=ais_se_enriched&w=740&q=80)',
+          backgroundImage: 'url(https://img.freepik.com/premium-photo/sky-with-beautiful-cloud-background_570543-6327.jpg?semt=ais_hybrid&w=740&q=80)',
           zIndex: 0
         }}
       />
@@ -87,7 +87,8 @@ export default function NFTGeneratorPage() {
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                className="w-full px-4 py-2 bg-black border border-white text-white rounded"
+                className="w-full px-4 py-2 border rounded"
+                style={{ backgroundColor: '#ffffff', color: '#000000', borderColor: '#000000' }}
                 rows={4}
                 placeholder="Describe the NFT image you want to generate..."
               />
@@ -127,7 +128,7 @@ export default function NFTGeneratorPage() {
               className="w-full px-8 py-3 transition-colors disabled:opacity-50"
               style={{ color: '#000000', border: '1px solid #000000' }}
             >
-              {loading ? "Generating..." : "Generate NFT Image"}
+              {loading ? "Generating..." : "Pay 0.01 USDC to proceed"}
             </button>
 
             {error && (
@@ -137,7 +138,7 @@ export default function NFTGeneratorPage() {
             )}
 
             {result && (
-              <div className="p-4 bg-zinc-900 frame-border rounded relative" style={{ zIndex: 30 }}>
+              <div className="p-4 frame-border rounded relative" style={{ zIndex: 30, backgroundColor: '#ffffff' }}>
                 <div className="corner-top-left"></div>
                 <div className="corner-top-right"></div>
                 <div className="corner-bottom-left"></div>
@@ -145,7 +146,7 @@ export default function NFTGeneratorPage() {
                 {result.startsWith("http") || result.startsWith("data:") ? (
                   <img src={result} alt="Generated NFT" className="max-w-full rounded" />
                 ) : (
-                  <p className="text-zinc-300">{result}</p>
+                  <p style={{ color: '#000000' }}>{result}</p>
                 )}
               </div>
             )}

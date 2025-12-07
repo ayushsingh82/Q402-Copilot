@@ -8,7 +8,6 @@ const navItems = [
   { name: "NFT Generator", path: "/nft-generator" },
   { name: "Smart Contracts", path: "/smart-contracts" },
   { name: "Contract Auditor", path: "/contract-auditor" },
-  { name: "402", path: "/402" },
 ];
 
 export default function Navbar() {
@@ -20,7 +19,7 @@ export default function Navbar() {
       style={{ 
         zIndex: 15, 
         borderBottom: '1px solid #000000',
-        backgroundImage: 'url(https://img.freepik.com/free-vector/hand-painted-blue-sky-background-with-fluffy-white-clouds_1048-18892.jpg?semt=ais_se_enriched&w=740&q=80)',
+        backgroundImage: 'url(https://img.freepik.com/premium-photo/sky-with-beautiful-cloud-background_570543-6327.jpg?semt=ais_hybrid&w=740&q=80)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -41,7 +40,7 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   href={item.path}
-                  className="text-base font-medium transition-colors px-6 py-2 relative z-10"
+                  className="text-base font-medium transition-colors px-3 py-2 relative z-10"
                   style={{
                     color: '#000000',
                     borderBottom: isActive ? '2px solid #000000' : 'none'

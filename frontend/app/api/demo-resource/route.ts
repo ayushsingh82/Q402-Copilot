@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { create402Response } from "@/lib/x402-server";
 import { verifyPayment, settlePayment } from "@q402/core";
-import type { SignedPaymentPayload } from "@q402/core";
 import { decodeBase64, encodeBase64 } from "@q402/core";
+
+// Define the payment payload type locally
+type SignedPaymentPayload = {
+  paymentDetails: {
+    amount: string;
+    token: string;
+    [key: string]: any;
+  };
+  signature: string;
+  [key: string]: any;
+};
 
 const X_PAYMENT_HEADER = "x-payment";
 const X_PAYMENT_RESPONSE_HEADER = "x-payment-response";
@@ -32,7 +42,7 @@ export async function GET(request: NextRequest) {
     // Decode payment payload
     let payload: SignedPaymentPayload;
     try {
-      payload = decodeBase64<SignedPaymentPayload>(paymentHeader);
+      payload = decodeBase64(paymentHeader) as SignedPaymentPayload;
     } catch (error) {
       return NextResponse.json(
         {
