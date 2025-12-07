@@ -38,17 +38,19 @@ export default function SmartContractsPage() {
     setPaymentStatus("");
 
     try {
-      // Show amount
-      setPaymentStatus("Amount: 0.01 BNB");
+      // Send native BNB transaction
+      setPaymentStatus("Sending payment transaction...");
       
-      // Wait 2 seconds
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const hash = await walletClient.sendTransaction({
+        account: address,
+        to: RECIPIENT_ADDRESS,
+        value: AMOUNT,
+      });
 
-      // Proceed with payment simulation
-      setPaymentStatus("Processing payment...");
-      
-      // Wait 2-3 seconds (using 2.5 seconds)
-      await new Promise(resolve => setTimeout(resolve, 2500));
+      setPaymentStatus(`Transaction sent: ${hash.substring(0, 10)}... Waiting for confirmation...`);
+
+      // Wait for transaction confirmation
+      await publicClient.waitForTransactionReceipt({ hash });
 
       setPaymentStatus("Payment confirmed! Generating contract...");
 
