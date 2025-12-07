@@ -1,4 +1,33 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Landing() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState<string>("");
+  const [result, setResult] = useState<string | null>(null);
+
+  const handlePayment = async () => {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    setPaymentStatus("Payment processing...");
+
+    try {
+      // Simulate payment processing delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      setPaymentStatus("Payment confirmed!");
+      setResult("Payment successful! Your transaction has been processed.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      setPaymentStatus("");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen text-white font-sans relative overflow-hidden">
       {/* Full page background image */}
@@ -162,6 +191,39 @@ export default function Landing() {
               Experience the future of Web3 interaction where AI meets
               gas-sponsored, policy-protected transactions.
             </p>
+            
+            <div className="mt-8 pt-8 border-t border-black">
+              <button
+                onClick={handlePayment}
+                disabled={loading}
+                className="w-full px-8 py-3 transition-colors disabled:opacity-50"
+                style={{ color: '#000000', border: '1px solid #000000' }}
+              >
+                {loading ? (paymentStatus || "Processing...") : "Pay 0.1 USDC to proceed"}
+              </button>
+
+              {error && (
+                <div className="mt-4 p-4 bg-red-900/20 border border-red-500 rounded">
+                  <p className="text-red-400">{error}</p>
+                </div>
+              )}
+
+              {paymentStatus && !error && (
+                <div className="mt-4 p-4 bg-blue-100 border border-blue-400 rounded" style={{ backgroundColor: '#d1ecf1', borderColor: '#0c5460' }}>
+                  <p style={{ color: '#000000' }}>{paymentStatus}</p>
+                </div>
+              )}
+
+              {result && (
+                <div className="mt-4 p-4 frame-border rounded relative" style={{ zIndex: 50, backgroundColor: '#ffffff' }}>
+                  <div className="corner-top-left"></div>
+                  <div className="corner-top-right"></div>
+                  <div className="corner-bottom-left"></div>
+                  <div className="corner-bottom-right"></div>
+                  <p style={{ color: '#000000' }}>{result}</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>

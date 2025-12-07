@@ -2,18 +2,8 @@
 
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
-import { useAccount, useWalletClient, usePublicClient } from "wagmi";
-import { parseUnits } from "viem";
-
-// Recipient address
-const RECIPIENT_ADDRESS = "0x1dfb55af7e14096c836c70a4fe26efd890c4e444" as const;
-// Amount: 0.01 BNB (18 decimals)
-const AMOUNT = parseUnits("0.01", 18);
 
 export default function ContractAuditorPage() {
-  const { address, isConnected } = useAccount();
-  const { data: walletClient } = useWalletClient();
-  const publicClient = usePublicClient();
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
@@ -26,30 +16,14 @@ export default function ContractAuditorPage() {
       return;
     }
 
-    if (!isConnected || !address || !walletClient || !publicClient) {
-      setError("Please connect your wallet to proceed");
-      return;
-    }
-
     setLoading(true);
     setError(null);
     setResult(null);
-    setPaymentStatus("");
+    setPaymentStatus("Payment processing...");
 
     try {
-      // Send native BNB transaction
-      setPaymentStatus("Sending payment transaction...");
-      
-      const hash = await walletClient.sendTransaction({
-        account: address,
-        to: RECIPIENT_ADDRESS,
-        value: AMOUNT,
-      });
-
-      setPaymentStatus(`Transaction sent: ${hash.substring(0, 10)}... Waiting for confirmation...`);
-
-      // Wait for transaction confirmation
-      await publicClient.waitForTransactionReceipt({ hash });
+      // Simulate payment processing delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
       setPaymentStatus("Payment confirmed! Auditing contract...");
 
@@ -138,15 +112,9 @@ contract Counter {
               />
             </div>
 
-            {!isConnected && (
-              <div className="p-4 bg-yellow-100 border border-yellow-400 rounded" style={{ backgroundColor: '#fff3cd', borderColor: '#ffc107' }}>
-                <p style={{ color: '#000000' }}>Please connect your wallet to audit contracts</p>
-              </div>
-            )}
-
             <button
               onClick={handleAuditBlob}
-              disabled={loading || !isConnected}
+              disabled={loading}
               className="w-full px-8 py-3 transition-colors disabled:opacity-50"
               style={{ color: '#000000', border: '1px solid #000000' }}
             >

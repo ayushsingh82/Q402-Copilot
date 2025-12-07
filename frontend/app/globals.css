@@ -236,3 +236,30 @@ nav .frame-border .corner-bottom-right {
   border-left: none;
   border-top: none;
 }
+
+/* Hide wallet balance in RainbowKit ConnectButton */
+[data-rk] button[data-testid="rk-account-button"] > div:first-child > div:last-child,
+[data-rk] button[data-testid="rk-account-button"] > div:first-child > span:last-child,
+[data-rk] button[data-testid="rk-account-button"] > div > div[class*="balance"],
+[data-rk] button[data-testid="rk-account-button"] > div > span[class*="balance"] {
+  display: none !important;
+}
+
+/* Hide balance in account modal */
+[data-rk] [class*="AccountModal"] [class*="balance"],
+[data-rk] [class*="AccountModal"] [class*="Balance"],
+[data-rk] [class*="accountModal"] [class*="balance"],
+[data-rk] [class*="accountModal"] [class*="Balance"] {
+  display: none !important;
+}
+
+/* More specific selectors for balance hiding */
+[data-rk] *[class*="rk-account-button"] *[class*="balance"],
+[data-rk] *[class*="rk-account-button"] *[class*="Balance"] {
+  display: none !important;
+}
+
+/* Hide second child div in account button (typically contains balance) */
+[data-rk] button[data-testid="rk-account-button"] > div:first-child > div:nth-child(2) {
+  display: none !important;
+}

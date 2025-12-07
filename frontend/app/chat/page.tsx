@@ -1,8 +1,34 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import { useState } from "react";
 
 export default function ChatPage() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState<string>("");
+  const [result, setResult] = useState<string | null>(null);
+
+  const handlePayment = async () => {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    setPaymentStatus("Payment processing...");
+
+    try {
+      // Simulate payment processing delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      setPaymentStatus("Payment confirmed!");
+      setResult("Payment successful! Your transaction has been processed.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      setPaymentStatus("");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white font-sans">
       <Navbar />
@@ -140,6 +166,47 @@ export default function ChatPage() {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* Payment Section */}
+          <div className="mt-12 frame-border p-6 relative">
+            <div className="corner-top-left"></div>
+            <div className="corner-top-right"></div>
+            <div className="corner-bottom-left"></div>
+            <div className="corner-bottom-right"></div>
+            <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'cursive' }}>
+              Payment
+            </h2>
+            
+            <button
+              onClick={handlePayment}
+              disabled={loading}
+              className="w-full px-8 py-3 transition-colors disabled:opacity-50 text-white border border-white hover:bg-zinc-900"
+            >
+              {loading ? (paymentStatus || "Processing...") : "Pay 0.1 USDC to proceed"}
+            </button>
+
+            {error && (
+              <div className="mt-4 p-4 bg-red-900/20 border border-red-500 rounded">
+                <p className="text-red-400">{error}</p>
+              </div>
+            )}
+
+            {paymentStatus && !error && (
+              <div className="mt-4 p-4 bg-blue-900/20 border border-blue-500 rounded">
+                <p className="text-blue-400">{paymentStatus}</p>
+              </div>
+            )}
+
+            {result && (
+              <div className="mt-4 p-4 frame-border rounded relative" style={{ zIndex: 50, backgroundColor: '#ffffff' }}>
+                <div className="corner-top-left"></div>
+                <div className="corner-top-right"></div>
+                <div className="corner-bottom-left"></div>
+                <div className="corner-bottom-right"></div>
+                <p style={{ color: '#000000' }}>{result}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
