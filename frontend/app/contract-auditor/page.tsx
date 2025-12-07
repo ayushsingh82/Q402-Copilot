@@ -2,12 +2,23 @@
 
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
+import { useAccount, useWalletClient, usePublicClient } from "wagmi";
+import { parseUnits } from "viem";
+
+// Recipient address
+const RECIPIENT_ADDRESS = "0x1dfb55af7e14096c836c70a4fe26efd890c4e444" as const;
+// Amount: 0.01 BNB (18 decimals)
+const AMOUNT = parseUnits("0.01", 18);
 
 export default function ContractAuditorPage() {
+  const { address, isConnected } = useAccount();
+  const { data: walletClient } = useWalletClient();
+  const publicClient = usePublicClient();
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState<string>("");
 
   const handleAuditBlob = async () => {
     if (!question.trim()) {
@@ -15,11 +26,34 @@ export default function ContractAuditorPage() {
       return;
     }
 
+    if (!isConnected || !address || !walletClient || !publicClient) {
+      setError("Please connect your wallet to proceed");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setResult(null);
+    setPaymentStatus("");
 
     try {
+      // Send native BNB transaction
+      setPaymentStatus("Sending payment transaction...");
+      
+      const hash = await walletClient.sendTransaction({
+        account: address,
+        to: RECIPIENT_ADDRESS,
+        value: AMOUNT,
+      });
+
+      setPaymentStatus(`Transaction sent: ${hash.substring(0, 10)}... Waiting for confirmation...`);
+
+      // Wait for transaction confirmation
+      await publicClient.waitForTransactionReceipt({ hash });
+
+      setPaymentStatus("Payment confirmed! Auditing contract...");
+
+      // Make API call to audit contract
       const response = await fetch("/api/contract-auditor/audit", {
         method: "POST",
         headers: {
@@ -38,8 +72,10 @@ export default function ContractAuditorPage() {
       }
 
       setResult(data.audit || data.bot || "Audit completed successfully!");
+      setPaymentStatus("Payment successful!");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
+      setPaymentStatus("");
     } finally {
       setLoading(false);
     }
@@ -102,18 +138,30 @@ contract Counter {
               />
             </div>
 
+            {!isConnected && (
+              <div className="p-4 bg-yellow-100 border border-yellow-400 rounded" style={{ backgroundColor: '#fff3cd', borderColor: '#ffc107' }}>
+                <p style={{ color: '#000000' }}>Please connect your wallet to audit contracts</p>
+              </div>
+            )}
+
             <button
               onClick={handleAuditBlob}
-              disabled={loading}
+              disabled={loading || !isConnected}
               className="w-full px-8 py-3 transition-colors disabled:opacity-50"
               style={{ color: '#000000', border: '1px solid #000000' }}
             >
-              {loading ? "Auditing..." : "Pay 0.01 USDC to proceed"}
+              {loading ? (paymentStatus || "Auditing...") : "Pay 0.01 BNB to proceed"}
             </button>
 
             {error && (
               <div className="p-4 bg-red-900/20 border border-red-500 rounded">
                 <p className="text-red-400">{error}</p>
+              </div>
+            )}
+
+            {paymentStatus && !error && (
+              <div className="p-4 bg-blue-100 border border-blue-400 rounded" style={{ backgroundColor: '#d1ecf1', borderColor: '#0c5460' }}>
+                <p style={{ color: '#000000' }}>{paymentStatus}</p>
               </div>
             )}
 
