@@ -45,90 +45,90 @@ export default function Landing() {
       <section className="container mx-auto px-6 py-12" style={{ zIndex: 20 }}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
           {/* Feature Box 1 */}
-          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center frame-border relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center frame-border relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive', color: '#000000', WebkitTextFillColor: '#000000' }}>
               Research & Explain
             </h3>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Get instant insights about tokens and protocols using ChainGPT
               LLM. Understand what you're interacting with before you execute.
             </p>
           </div>
 
           {/* Feature Box 2 */}
-          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center frame-border relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center frame-border relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive', color: '#000000', WebkitTextFillColor: '#000000' }}>
               Generate & Audit
             </h3>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Create Solidity contracts or audit existing ones with AI-powered
               tools. Ensure security and best practices before deployment.
             </p>
           </div>
 
           {/* Feature Box 3 */}
-          <div className="aspect-square feature-box feature-box-yellow p-6 flex flex-col justify-center items-center text-center frame-border relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="aspect-square feature-box feature-box-yellow p-6 flex flex-col justify-center items-center text-center frame-border relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive', color: '#000000' }}>
               Execute Transactions
             </h3>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Execute swaps, stakes, transfers, or contract deployments all in
               one signature. Gas-sponsored and policy-protected.
             </p>
           </div>
 
           {/* Feature Box 4 */}
-          <div className="aspect-square feature-box feature-box-blue p-6 flex flex-col justify-center items-center text-center frame-border relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="aspect-square feature-box feature-box-blue p-6 flex flex-col justify-center items-center text-center frame-border relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive', color: '#000000' }}>
               Spend Caps
             </h3>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Set maximum spending limits to protect your assets. Control how
               much can be spent per transaction or per day.
             </p>
           </div>
 
           {/* Feature Box 5 */}
-          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center frame-border relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="aspect-square feature-box feature-box-red p-6 flex flex-col justify-center items-center text-center frame-border relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive', color: '#000000' }}>
               Allow/Deny Lists
             </h3>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Whitelist trusted addresses and block suspicious ones. Maintain
               full control over who can receive your transactions.
             </p>
           </div>
 
           {/* Feature Box 6 */}
-          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center frame-border relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="aspect-square feature-box feature-box-purple p-6 flex flex-col justify-center items-center text-center frame-border relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive' }}>
+            <h3 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'cursive', color: '#000000' }}>
               Risk Warnings
             </h3>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Get clear, human-readable transaction previews with risk
               assessments before signing. Know exactly what you're approving.
             </p>
@@ -139,26 +139,26 @@ export default function Landing() {
       {/* About Section */}
       <section className="container mx-auto px-6 py-12" style={{ zIndex: 20 }}>
         <div className="max-w-3xl mx-auto">
-          <div className="frame-border p-8 relative bg-black" style={{ zIndex: 50, backgroundColor: '#000000' }}>
+          <div className="frame-border p-8 relative" style={{ zIndex: 50 }}>
             <div className="corner-top-left"></div>
             <div className="corner-top-right"></div>
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
-            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
+            <h2 className="text-3xl font-bold mb-6" style={{ fontFamily: 'cursive', color: '#000000', WebkitTextFillColor: '#000000', background: 'none' }}>
               About q402-copilot
             </h2>
-            <p className="text-zinc-300 mb-4">
+            <p className="mb-4" style={{ color: '#000000' }}>
               q402-copilot is a chat-based Web3 Copilot built on BNB Chain that combines
               the power of ChainGPT AI with the gasless payment protocol of
               x402. Built for the Quack × ChainGPT Super Web3 Agent Hackathon.
             </p>
-            <p className="text-zinc-300 mb-4">
+            <p className="mb-4" style={{ color: '#000000' }}>
               With q402-copilot, you can research tokens and protocols, generate or
               audit smart contracts, and execute complex transactions—all through
               a simple chat interface. Everything is secured with spend caps,
               allow/deny lists, and comprehensive risk warnings.
             </p>
-            <p className="text-zinc-300">
+            <p style={{ color: '#000000' }}>
               Experience the future of Web3 interaction where AI meets
               gas-sponsored, policy-protected transactions.
             </p>

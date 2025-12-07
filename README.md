@@ -121,33 +121,6 @@ Body: {
 }
 ```
 
-## Project Structure
-
-```
-Q402/
-├── frontend/                    # Next.js frontend application
-│   ├── app/
-│   │   ├── api/                # API routes
-│   │   │   ├── smart-contracts/ # Contract generation endpoints
-│   │   │   ├── contract-auditor/# Audit endpoints
-│   │   │   └── nft-generate/    # NFT generation endpoints
-│   │   ├── smart-contracts/     # Contract generator UI
-│   │   ├── contract-auditor/   # Auditor UI
-│   │   └── nft-generator/       # NFT generator UI
-│   ├── components/              # React components
-│   └── lib/
-│       ├── contracts/           # Pre-made contracts (Q402.sol)
-│       └── x402-server.ts       # q402 server integration
-│
-├── packages/                    # q402 protocol packages
-│   ├── core/                    # Core SDK (@q402/core)
-│   ├── facilitator/            # Facilitator service
-│   ├── middleware-express/     # Express middleware
-│   └── middleware-hono/        # Hono middleware
-│
-└── specs/                      # Protocol specifications
-```
-
 ## Features Breakdown
 
 ### 1. Smart Contract Generator

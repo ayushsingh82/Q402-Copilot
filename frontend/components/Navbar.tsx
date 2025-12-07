@@ -13,14 +13,23 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const needsBlackBg = pathname === "/contract-auditor" || pathname === "/nft-generator" || pathname === "/smart-contracts" || pathname === "/";
 
   return (
-    <nav className={`w-full border-b border-white relative ${needsBlackBg ? 'bg-black' : ''}`} style={{ zIndex: 15 }}>
+    <nav 
+      className="w-full relative" 
+      style={{ 
+        zIndex: 15, 
+        borderBottom: '1px solid #000000',
+        backgroundImage: 'url(https://img.freepik.com/free-vector/hand-painted-blue-sky-background-with-fluffy-white-clouds_1048-18892.jpg?semt=ais_se_enriched&w=740&q=80)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
-          <Link href="/" className="text-2xl font-bold text-white" style={{ fontFamily: 'cursive' }}>
+          <Link href="/" className="text-2xl font-bold" style={{ fontFamily: 'cursive', color: '#000000' }}>
            Q402-Copilot
           </Link>
 
@@ -29,26 +38,17 @@ export default function Navbar() {
             {navItems.map((item, index) => {
               const isActive = pathname === item.path;
               return (
-                <div key={item.path} className="flex items-center relative frame-border">
-                  <div className="corner-top-left"></div>
-                  <div className="corner-top-right"></div>
-                  <div className="corner-bottom-left"></div>
-                  <div className="corner-bottom-right"></div>
-                  {/* Left separator - spans full height of nav container */}
-                  <div className="nav-separator left-0"></div>
-                  <Link
-                    href={item.path}
-                    className={`text-base font-medium transition-colors px-6 py-2 relative z-10 ${
-                      isActive
-                        ? "text-white border-b-2 border-white"
-                        : "text-zinc-300 hover:text-white"
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                  {/* Right separator - spans full height of nav container */}
-                  <div className="nav-separator right-0"></div>
-                </div>
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className="text-base font-medium transition-colors px-6 py-2 relative z-10"
+                  style={{
+                    color: '#000000',
+                    borderBottom: isActive ? '2px solid #000000' : 'none'
+                  }}
+                >
+                  {item.name}
+                </Link>
               );
             })}
           </div>

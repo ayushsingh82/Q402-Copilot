@@ -38,6 +38,26 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Override gradient for feature box headings to use black text */
+.feature-box h3 {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-clip: unset !important;
+  animation: none !important;
+  color: #000000 !important;
+}
+
+/* Override gradient for About section heading to use black text */
+.frame-border h2 {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-clip: unset !important;
+  animation: none !important;
+  color: #000000 !important;
+}
+
 /* Feature box hover effects */
 .feature-box {
   transition: all 0.3s ease;
@@ -98,7 +118,19 @@ nav .nav-separator {
   top: -1rem;
   bottom: -1rem;
   width: 1px;
-  background-color: white;
+  background-color: #000000;
+}
+
+/* Navbar frame-border elements - black borders */
+nav .frame-border {
+  border-color: #000000 !important;
+}
+
+nav .frame-border .corner-top-left,
+nav .frame-border .corner-top-right,
+nav .frame-border .corner-bottom-left,
+nav .frame-border .corner-bottom-right {
+  border-color: #000000 !important;
 }
 
 /* Token box style border with geometric frame (white version) */

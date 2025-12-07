@@ -103,12 +103,10 @@ export default function ContractAuditorPage() {
       <div 
         className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(https://thumbs.dreamstime.com/b/dark-clouds-gathering-lightning-thunder-stormy-sky-spectacular-display-nature-s-power-fury-387460417.jpg)',
+          backgroundImage: 'url(https://img.freepik.com/free-vector/hand-painted-blue-sky-background-with-fluffy-white-clouds_1048-18892.jpg?semt=ais_se_enriched&w=740&q=80)',
           zIndex: 0
         }}
       />
-      {/* Dark overlay for better text readability */}
-      <div className="fixed inset-0 w-full h-full bg-black/60" style={{ zIndex: 1 }} />
       
       {/* Content with higher z-index */}
       <div className="relative" style={{ zIndex: 10 }}>
@@ -118,10 +116,10 @@ export default function ContractAuditorPage() {
         <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive' }}>
+            <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: 'cursive', color: '#000000', WebkitTextFillColor: '#000000', background: 'none' }}>
               Smart Contract Auditor
             </h1>
-            <p className="text-xl text-zinc-300">
+            <p className="text-xl" style={{ color: '#000000' }}>
               Audit smart contracts using ChainGPT Smart Contract Auditor SDK
             </p>
           </div>
@@ -132,7 +130,7 @@ export default function ContractAuditorPage() {
             <div className="corner-bottom-left"></div>
             <div className="corner-bottom-right"></div>
             <div>
-              <label className="block text-zinc-300 mb-2">Contract Code</label>
+              <label className="block mb-2" style={{ color: '#000000' }}>Contract Code</label>
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -159,16 +157,16 @@ contract Counter {
               <button
                 onClick={handleAuditBlob}
                 disabled={loading || streaming}
-                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50 relative"
-                style={{ zIndex: 26 }}
+                className="flex-1 px-8 py-3 transition-colors disabled:opacity-50 relative"
+                style={{ zIndex: 26, color: '#000000', border: '1px solid #000000' }}
               >
                 {loading ? "Auditing..." : "Audit (Full Report)"}
               </button>
               <button
                 onClick={handleAuditStream}
                 disabled={loading || streaming}
-                className="flex-1 px-8 py-3 border border-white text-white hover:bg-zinc-900 transition-colors disabled:opacity-50 relative"
-                style={{ zIndex: 26 }}
+                className="flex-1 px-8 py-3 transition-colors disabled:opacity-50 relative"
+                style={{ zIndex: 26, color: '#000000', border: '1px solid #000000' }}
               >
                 {streaming ? "Streaming..." : "Audit (Stream)"}
               </button>
@@ -186,7 +184,7 @@ contract Counter {
                 <div className="corner-top-right"></div>
                 <div className="corner-bottom-left"></div>
                 <div className="corner-bottom-right"></div>
-                <h3 className="text-lg font-semibold mb-2 text-white">Audit Report:</h3>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: '#000000' }}>Audit Report:</h3>
                 <pre className="text-sm text-zinc-300 whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto">
                   {result}
                 </pre>
